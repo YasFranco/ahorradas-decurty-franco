@@ -23,51 +23,53 @@
         </nav>
         </header>
     
-        <section id="blocks-container" class="flex flex-col m-5 text-zinc-600">
-        <div id="sect-balance-filters" class="my-4">
-            <div id="div-balance" class="bg-white rounded-md shadow p-3 ">
-                <h2 class="text-3xl font-medium text-zinc-700">Balance</h2>
-                <div class="flex justify-between">
-                    <div> <p class="text-lg">Ganancias</p> </div>
-                    <div id="numb-earnings" class="text-green-500">+$0</div>
+        <section id="blocks-container" class="flex flex-col m-5 text-zinc-600 mt-14 pb-6 lg:flex-row lg:justify-around xl:mx-36 xl:mt-20">
+        <div id="sect-balance-filters" class="my-4 lg:w-3/12 lg:m-0 lg:p-0">
+            <div id="div-balance" class="bg-white rounded-md shadow p-6 pb-6 ">
+                <h2 class="text-3xl font-semibold text-zinc-700">Balance</h2>
+                <div class="mt-10">
+                <div class="flex justify-between pb-5">
+                    <div> <p class="text-xl">Ganancias</p> </div>
+                    <div id="numb-earnings" class="text-green-500 text-lg">+$0</div>
+                </div>
+                <div class="flex justify-between pb-6">
+                    <div> <p class="text-xl">Gastos</p> </div>
+                    <div id="numb-expenses" class="text-red-500 text-lg">-$0</div>
                 </div>
                 <div class="flex justify-between">
-                    <div> <p class="text-lg">Gastos</p> </div>
-                    <div id="numb-expenses" class="text-red-500">-$0</div>
-                </div>
-                <div class="flex justify-between">
-                    <div> <p class="text-xl">Total</p> </div>
-                    <div id="numb-total" class="font-medium">$0</div>
+                    <div> <p class="text-2xl">Total</p> </div>
+                    <div id="numb-total" class="font-medium text-lg">$0</div>
                 </div>
             </div>
+            </div>
     
-            <div id="div-filters" class="bg-white my-4 rounded-md shadow p-3">
+            <div id="div-filters" class="bg-white my-4 rounded-md shadow p-6">
                 <div id="div-title-filter" class="flex justify-between">
-                    <h2 class="text-2xl font-medium text-zinc-700">Filtros</h2>
+                    <h2 class="text-2xl font-semibold text-zinc-700">Filtros</h2>
                     <Button id="btn-hide-filters" class="text-sky-600 cursor-pointer">Ocultar filtros</Button>
                 </div>
-                <div id="input-filter-container">
+                <div id="input-filter-container" class="mt-8">
                     <div class="flex flex-col">
-                        <label for="type">Tipo</label>
-                        <select id="type-filter">
+                        <label for="type" class="font-semibold text-black pb-2.5">Tipo</label>
+                        <select id="type-filter" class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5">
                             <option value="all">Todos</option>
                             <option value="expenses">Gastos</option>
                             <option value="earnings">Ganancias</option>
                         </select>
                     </div>
                     <div class="flex flex-col">
-                        <label for="category">Categoría</label>
-                        <select id="category-filter">
+                        <label for="category" class="font-semibold text-black pt-4 pb-2.5">Categoría</label>
+                        <select id="category-filter" class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5">
                             <!--DOM-->
                         </select>
                     </div>
                     <div class="flex flex-col">
-                        <label for="since">Desde</label>
-                        <input type="date" id="date-filter">
+                        <label for="since" class="font-semibold text-black pt-4 pb-2.5">Desde</label>
+                        <input type="date" id="date-filter" class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5">
                     </div>
                     <div class="flex flex-col">
-                        <label for="order">Ordenar por</label>
-                        <select id="order-filter">
+                        <label for="order" class="font-semibold text-black pt-4 pb-2.5">Ordenar por</label>
+                        <select id="order-filter" class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5">
                             <option value="more-recent">Más reciente</option>
                             <option value="less-recent">Menos reciente</option>
                             <option value="bigger-amount">Mayor monto</option>
@@ -80,17 +82,17 @@
             </div>
         </div>
     
-        <div id="div-operations" class="bg-white rounded-md shadow p-3">
+        <div id="div-operations" class="bg-white rounded-md shadow p-6 lg:w-8/12 lg:h-fit">
             <div id="div-title-operations" class="md:flex md:justify-between">
-                <h2 class="text-2xl font-medium text-zinc-700">Operaciones</h2>
-                <button id="btn-new-operation" class="bg-teal-400 rounded-md p-2 text-white">+ Nueva operación</button>
+                <h2 class="text-2xl font-semibold text-zinc-700 pb-6">Operaciones</h2>
+                <button id="btn-new-operation" class="bg-teal-400 rounded-md p-2 text-white hover:bg-teal-600">+ Nueva operación</button>
             </div>
             <div class="md:flex md:flex-col md:m-auto">
-            <figure>
-                <img src="./img-ahorradas/wallet.svg" alt="Ilustración de personas y billetera" class="w-80 md:m-5 ">
+            <figure class="m-auto">
+                <img src="./img-ahorradas/wallet.svg" alt="Ilustración de personas y billetera" class="pt-24 pb-14 md:m-5 md:w-80">
             </figure>
-            <div id="div-text-operations">
-                <h3>Sin resultados</h3>
+            <div id="div-text-operations" class="flex flex-col m-auto pb-20">
+                <h3 class="pb-6 text-2xl text-zinc-700 self-center">Sin resultados</h3>
                 <p>Cambia los filtros o agrega operaciones</p>
             </div>
             </div>
