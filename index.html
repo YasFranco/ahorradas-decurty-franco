@@ -1,11 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AhorrADAs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-<body>
+
+<body class="bg-stone-100">
     
+    <header >
+        <nav id="nav-bar" class="bg-teal-400 flex flex-row items-center justify-between p-3">
+            <div id="title-logo">
+                <div>
+                    <i class="bi bi-wallet cursor-pointer text-3xl font-sans text-white font-medium p-1"> AhorrADAs</i>
+                  </div>
+            </div>
+            <div id="div-button-menu">
+                <button> <i class="bi bi-list cursor-pointer text-2xl text-white hover:bg-teal-600 p-2 rounded-md"></i> </button>
+            </div>
+        </nav>
+        </header>
+    
+        <section id="blocks-container" class="flex flex-col m-5 text-zinc-600">
+        <div id="sect-balance-filters" class="my-4">
+            <div id="div-balance" class="bg-white rounded-md shadow p-3 ">
+                <h2 class="text-3xl font-medium text-zinc-700">Balance</h2>
+                <div class="flex justify-between">
+                    <div> <p class="text-lg">Ganancias</p> </div>
+                    <div id="numb-earnings" class="text-green-500">+$0</div>
+                </div>
+                <div class="flex justify-between">
+                    <div> <p class="text-lg">Gastos</p> </div>
+                    <div id="numb-expenses" class="text-red-500">-$0</div>
+                </div>
+                <div class="flex justify-between">
+                    <div> <p class="text-xl">Total</p> </div>
+                    <div id="numb-total" class="font-medium">$0</div>
+                </div>
+            </div>
+    
+            <div id="div-filters" class="bg-white my-4 rounded-md shadow p-3">
+                <div id="div-title-filter" class="flex justify-between">
+                    <h2 class="text-2xl font-medium text-zinc-700">Filtros</h2>
+                    <Button id="btn-hide-filters" class="text-sky-600 cursor-pointer">Ocultar filtros</Button>
+                </div>
+                <div id="input-filter-container">
+                    <div class="flex flex-col">
+                        <label for="type">Tipo</label>
+                        <select id="type-filter">
+                            <option value="all">Todos</option>
+                            <option value="expenses">Gastos</option>
+                            <option value="earnings">Ganancias</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="category">Categoría</label>
+                        <select id="category-filter">
+                            <!--DOM-->
+                        </select>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="since">Desde</label>
+                        <input type="date" id="date-filter">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="order">Ordenar por</label>
+                        <select id="order-filter">
+                            <option value="more-recent">Más reciente</option>
+                            <option value="less-recent">Menos reciente</option>
+                            <option value="bigger-amount">Mayor monto</option>
+                            <option value="smaller-amount">Menor monto</option>
+                            <option value="a-z">A/Z</option>
+                            <option value="z-a">Z/A</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div id="div-operations" class="bg-white rounded-md shadow p-3">
+            <div id="div-title-operations" class="md:flex md:justify-between">
+                <h2 class="text-2xl font-medium text-zinc-700">Operaciones</h2>
+                <button id="btn-new-operation" class="bg-teal-400 rounded-md p-2 text-white">+ Nueva operación</button>
+            </div>
+            <div class="md:flex md:flex-col md:m-auto">
+            <figure>
+                <img src="./img-ahorradas/wallet.svg" alt="Ilustración de personas y billetera" class="w-80 md:m-5 ">
+            </figure>
+            <div id="div-text-operations">
+                <h3>Sin resultados</h3>
+                <p>Cambia los filtros o agrega operaciones</p>
+            </div>
+            </div>
+        </div>
+        </section>
+
 </body>
 </html>
