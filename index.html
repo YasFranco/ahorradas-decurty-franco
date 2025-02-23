@@ -120,17 +120,63 @@
             </div>
         </div>
     </section>
+    <section>
+        <div id="div-new-operation"
+            class=" hidden flex-col m-5 text-zinc-600 mt-14 pb-6 bg-white my-4 rounded-md shadow p-6 lg:mx-36 xl:mx-56 xl:mt-20 2xl:mx-80">
+            <h2 id="title-new-operation" class="text-5xl font-semibold text-zinc-700 pb-14">Nueva operación</h2>
+            <div id="new-op-form-container" class="flex flex-col">
+                <div class="flex flex-col pt-4">
+                    <label for="decription" class="font-semibold text-black pb-2.5">Descripción</label>
+                    <input id="input-new-op-description"
+                        class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                        type="text">
+                </div>
+                <div class="flex flex-col pt-4">
+                    <label for="amount" class="font-semibold text-black pb-2.5">Monto</label>
+                    <input id="input-new-op-amount"
+                        class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                        type="number">
+                </div>
+                <div class="flex flex-col pt-4">
+                    <label for="type" class="font-semibold text-black pb-2.5">Tipo</label>
+                    <select id="select-new-op-type"
+                        class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                        <option value="expenses">Gastos</option>
+                        <option value="earnings">Ganancias</option>
+                    </select>
+                </div>
+                <div class="flex flex-col pt-4">
+                    <label for="category" class="font-semibold text-black pb-2.5">Categoría</label>
+                    <select id="select-new-op-category"
+                        class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5">
+
+                    </select>
+                </div>
+                <div class="flex flex-col pt-4">
+                    <label for="date" class="font-semibold text-black pb-2.5">Fecha</label>
+                    <input id="input-new-op-date"
+                        class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                        type="date">
+                </div>
+
+                <div id="div-btn-new-op" class="self-end pt-8">
+                    <button id="btn-new-op-cancel" class="p-2 px-4 bg-stone-100 rounded">Cancelar</button>
+                    <button id="btn-new-op-add" class="p-2 px-4 bg-green-400 text-white rounded">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="flex m-5 text-zinc-600 lg:mx-36 xl:px-56">
         <div class="w-full flex flex-col justify-between mt-3">
             <div class=" flex flex-col gap-3 bg-white rounded-md shadow p-2 lg:px-9">
-                <h2 class="text-3xl font-semibold text-zinc-700 py-6 lg:text-5xl" >Categorías</h2>
+                <h2 class="text-3xl font-semibold text-zinc-700 py-6 lg:text-5xl">Categorías</h2>
                 <label for="name-categories" class="font-semibold text-black ">Nombre</label>
                 <div class="flex justify-between">
                     <div class="w-full pr-4">
                         <input type="text" class="border border-gray-300 rounded-lg  py-2 w-full">
                     </div>
                     <div>
-                        <button class="bg-teal-400 rounded-md p-2 text-white hover:bg-teal-600" >Agregar</button>
+                        <button class="bg-teal-400 rounded-md p-2 text-white hover:bg-teal-600">Agregar</button>
                     </div>
                 </div>
                 <div class="my-2">
@@ -140,41 +186,7 @@
         </div>
     </section>
 
-        <div id="div-new-operation" class=" hidden flex-col m-5 text-zinc-600 mt-14 pb-6 bg-white my-4 rounded-md shadow p-6 lg:mx-36 xl:mx-56 xl:mt-20 2xl:mx-80">
-            <h2 id="title-new-operation" class="text-5xl font-semibold text-zinc-700 pb-14">Nueva operación</h2>
-            <div id="new-op-form-container" class="flex flex-col">
-                <div class="flex flex-col pt-4">
-                    <label for="decription" class="font-semibold text-black pb-2.5">Descripción</label>
-                    <input id="input-new-op-description" class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5" type="text">
-                </div>
-                <div class="flex flex-col pt-4">
-                    <label for="amount" class="font-semibold text-black pb-2.5">Monto</label>
-                    <input id="input-new-op-amount" class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5" type="number">
-                </div>
-                <div class="flex flex-col pt-4">
-                    <label for="type" class="font-semibold text-black pb-2.5">Tipo</label>
-                    <select id="select-new-op-type" class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5">
-                        <option value="expenses">Gastos</option>
-                        <option value="earnings">Ganancias</option>
-                    </select>
-                </div>
-                <div class="flex flex-col pt-4">
-                    <label for="category" class="font-semibold text-black pb-2.5">Categoría</label>
-                    <select id="select-new-op-category" class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5">
 
-                    </select>
-                </div>
-                <div class="flex flex-col pt-4">
-                    <label for="date" class="font-semibold text-black pb-2.5">Fecha</label>
-                    <input id="input-new-op-date" class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5" type="date">
-                </div>
-
-                <div id="div-btn-new-op" class="self-end pt-8">
-                    <button id="btn-new-op-cancel" class="p-2 px-4 bg-stone-100 rounded">Cancelar</button>
-                    <button id="btn-new-op-add" class="p-2 px-4 bg-green-400 text-white rounded">Agregar</button>
-                </div>
-            </div>
-        </div>
 
 </body>
 
