@@ -7,7 +7,11 @@
 const $ = (elem) => document.querySelector(elem);
 const $$ = (elem) => document.querySelectorAll(elem);
 
+
 // -----FUNCIÓN MENU HAMBUERGUESA Y VIEWS-----
+
+// FUNCIÓN MENU HAMBUERGUESA Y VIEWS 
+
 
 const $btnMenu = $('#button-menu');
 const $btnMenuClose = $('#button-menu-close');
