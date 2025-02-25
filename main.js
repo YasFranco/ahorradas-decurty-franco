@@ -1,8 +1,8 @@
-let functions
-import("./functions.js").then((module) => {
-    functions = module.default;
-    console.log(functions);
-  });
+// let functions
+// import("./functions.js").then((module) => {
+//     functions = module.default;
+//     console.log(functions);
+//   });
 
 const $ = (elem) => document.querySelector(elem);
 const $$ = (elem) => document.querySelectorAll(elem);
@@ -66,9 +66,8 @@ $btnNewOp.addEventListener('click', () => {
 
 //----- GUARDAR INFO NUEVA OPERACION -----
 const $formNewOp = $('#new-op-form-container')
-const $btnNewOpAdd = $('#btn-new-op-add')
 
-$btnNewOp.addEventListener('submit', (event) => {
+$formNewOp.addEventListener('submit', (event) => {
     event.preventDefault()
 
     console.log("hola");
@@ -79,10 +78,10 @@ $btnNewOp.addEventListener('submit', (event) => {
         amount: Number(event.target[1].value),
         type: event.target[2].value,
         category: event.target[3].value,
-        date: dayjs(event.target[4].value).format("DD-MM-YYYY")
+        date: event.target[4].value
     }
 
-    functions.addOperation(newOp)
+    addOperation(newOp)
 })
 
 

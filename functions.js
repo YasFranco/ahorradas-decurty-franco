@@ -14,8 +14,8 @@ function addOperation(newOperation) {
     saveLocalStorage("operation", dataOperations)
 }
 
-export default {
-    readLocalStorage,
-    saveLocalStorage,
-    addOperation
-}
+// export default {
+//     readLocalStorage,
+//     saveLocalStorage,
+//     addOperation
+// }
