@@ -1,5 +1,8 @@
-import functions from "./functions.js"
-
+let functions
+import("./functions.js").then((module) => {
+    functions = module.default;
+    console.log(functions);
+  });
 
 const $ = (elem) => document.querySelector(elem);
 const $$ = (elem) => document.querySelectorAll(elem);
