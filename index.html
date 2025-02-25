@@ -11,6 +11,7 @@
 
 <body class="bg-stone-100">
 
+    <!-- NAV -->
     <header>
         <nav id="nav-bar" class="bg-teal-400 flex flex-row items-center justify-between p-3">
             <div id="title-logo">
@@ -20,25 +21,26 @@
             </div>
 
             <div id="div-button-menu md:hidden">
-                <button id="button-menu" > <i class="bi bi-list cursor-pointer text-2xl text-white hover:bg-teal-600 p-2 rounded-md"></i>
+                <button id="button-menu" > <i class="bi bi-list cursor-pointer text-2xl text-white hover:bg-teal-600 p-2 rounded-md md:hidden"></i>
                 </button>
 
                 <button id="button-menu-close" class="hidden"> <i class="bi bi-x-lg cursor-pointer text-2xl text-white hover:bg-teal-600 p-2 rounded-md"></i>
                 </button>
             </div>
+            <!-- Nav mobile -->
+            <div id="div-mobile-nav-list" class="hidden md:block flex absolute bg-white shadow h-32 left-0 top-14 w-full px-2 md:w-fit md:bg-transparent md:left-[52%] md:top-0 md:h-2 md:shadow-none min-[800px]:left-[53%] min-[800px]:left-[53%] lg:left-[64%] xl:left-[72%] 2xl:left-[74%]">
+                <ul id="mobile-nav-list" class="flex flex-col p-3 text-zinc-600 h-32 text-lg justify-around  md:flex-row  md:text-white md:gap-4 2xl:gap-6">
+                    <li id="nav-balance"><i class="bi bi-graph-up-arrow cursor-pointer  hover:text-xl hover:text-teal-800"> Balance</i></li>
+                    <li id="nav-categorias"><i class="bi bi-tag-fill cursor-pointer hover:text-xl hover:text-teal-800"> Categorías</i></li>
+                    <li id="nav-reportes"><i class="bi bi-pie-chart-fill cursor-pointer hover:text-xl hover:text-teal-800"> Reportes</i></li>
+                </ul>
+            </div>
         </nav>
 
-        <!-- Nav mobile -->
-        <div id="div-mobile-nav-list" class="bg-white shadow hidden">
-            <ul id="mobile-nav-list" class="flex flex-col p-3 text-zinc-600 text-lg h-32 justify-around md:">
-                <li id="nav-balance"><i class="bi bi-graph-up-arrow cursor-pointer"> Balance</i></li>
-                <li id="nav-categorias"><i class="bi bi-tag-fill cursor-pointer"> Categorías</i></li>
-                <li id="nav-reportes"><i class="bi bi-pie-chart-fill cursor-pointer"> Reportes</i></li>
-            </ul>
-        </div>
     </header>
 
-    <section id="blocks-container"
+    <!-- BALANCE -->
+    <section id="sect-balance"
         class="flex flex-col m-5 text-zinc-600 mt-14 pb-6 lg:flex-row lg:justify-around xl:mx-36 xl:mt-20">
         <div id="sect-balance-filters" class="my-4 lg:w-3/12 lg:m-0 lg:p-0">
             <div id="div-balance" class="bg-white rounded-md shadow p-6 pb-6 ">
@@ -126,6 +128,8 @@
             </div>
         </div>
     </section>
+
+    <!-- NUEVA OPERACIÓN -->
     <section>
         <div id="div-new-operation"
             class=" hidden flex-col m-5 text-zinc-600 mt-14 pb-6 bg-white my-4 rounded-md shadow p-6 lg:mx-36 xl:mx-56 xl:mt-20 2xl:mx-80">
@@ -172,7 +176,9 @@
             </div>
         </div>
     </section>
-    <section class=" hidden flex m-5 text-zinc-600 lg:mx-36 xl:px-56">
+
+    <!-- CATEGORIAS -->
+    <section id="sect-categories" class=" hidden flex m-5 text-zinc-600 lg:mx-36 xl:px-56">
         <div class="w-full flex flex-col justify-between mt-3">
             <div class=" flex flex-col gap-3 bg-white rounded-md shadow p-2 lg:px-9">
                 <h2 class="text-3xl font-semibold text-zinc-700 py-6 lg:text-5xl">Categorías</h2>
@@ -191,7 +197,9 @@
             </div>
         </div>
     </section>
-    <section class=" hidden flex m-5 text-zinc-600 lg:mx-36 xl:px-56">
+
+    <!-- REPORTES -->
+    <section id="sect-reports" class=" hidden flex m-5 text-zinc-600 lg:mx-36 xl:px-56">
         <div class="w-full flex flex-col justify-between mt-3">
             <div class="flex flex-col gap-3 bg-white rounded-md shadow p-2 lg:px-9">
                 <h2 class="text-3xl font-semibold text-zinc-700 py-6 lg:text-5xl ">
