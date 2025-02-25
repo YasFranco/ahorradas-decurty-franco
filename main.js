@@ -1,3 +1,6 @@
+//import functions from "./functions.js"
+
+
 const $ = (elem) => document.querySelector(elem);
 const $$ = (elem) => document.querySelectorAll(elem);
 
@@ -9,7 +12,9 @@ const $navMenuMobile = $('#div-mobile-nav-list');
 const btnBalance = $('#nav-balance');
 const btnCategories = $('#nav-categorias');
 const btnReports = $('#nav-reportes');
+const $btnNewOp = $('#btn-new-operation');
 const sectBalance = $('#sect-balance');
+const sectNewOp = $('#sect-new-opetarion');
 const sectCategories = $('#sect-categories');
 const sectReports = $('#sect-reports');
 
@@ -26,22 +31,40 @@ $btnMenuClose.addEventListener('click', () => {
     $navMenuMobile.classList.add("hidden")
 })
 
+$btnNewOp.addEventListener('click', () => {
+    sectBalance.classList.add("hidden");
+    sectCategories.classList.add("hidden")
+    sectReports.classList.add("hidden")
+    sectNewOp.classList.remove("hidden")
+})
+
 btnCategories.addEventListener('click', () => {
     sectBalance.classList.add("hidden");
     sectReports.classList.add("hidden")
+    sectNewOp.classList.add("hidden")
     sectCategories.classList.remove("hidden")
 });
 
 btnReports.addEventListener('click', () => {
     sectBalance.classList.add("hidden");
     sectCategories.classList.add("hidden")
+    sectNewOp.classList.add("hidden")
     sectReports.classList.remove("hidden")
 })
 
 btnBalance.addEventListener('click', () => {
     sectCategories.classList.add("hidden");
     sectReports.classList.add("hidden")
+    sectNewOp.classList.add("hidden")
     sectBalance.classList.remove("hidden")
+})
+
+// GUARDAR INFO NUEVA OPERACION
+const $formNewOp = $('#new-op-form-container')
+const $btnNewOpAdd = $('#btn-new-op-add')
+
+$btnNewOp.addEventListener('submit', (event) => {
+    MediaEncryptedEvent.preventDefault()
 })
 
 
