@@ -1,10 +1,10 @@
-//import functions from "./functions.js"
+import functions from "./functions.js"
 
 
 const $ = (elem) => document.querySelector(elem);
 const $$ = (elem) => document.querySelectorAll(elem);
 
-// FUNCIÓN MENU HAMBUERGUESA Y VIEWS
+// -----FUNCIÓN MENU HAMBUERGUESA Y VIEWS-----
 
 const $btnMenu = $('#button-menu');
 const $btnMenuClose = $('#button-menu-close');
@@ -18,6 +18,7 @@ const sectNewOp = $('#sect-new-opetarion');
 const sectCategories = $('#sect-categories');
 const sectReports = $('#sect-reports');
 
+// ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
     $btnMenu.classList.add("hidden");
     $btnMenuClose.classList.remove("hidden")
@@ -31,13 +32,7 @@ $btnMenuClose.addEventListener('click', () => {
     $navMenuMobile.classList.add("hidden")
 })
 
-$btnNewOp.addEventListener('click', () => {
-    sectBalance.classList.add("hidden");
-    sectCategories.classList.add("hidden")
-    sectReports.classList.add("hidden")
-    sectNewOp.classList.remove("hidden")
-})
-
+// VISTAS DE BALANCE, CATEGORÍAS Y REPORTES
 btnCategories.addEventListener('click', () => {
     sectBalance.classList.add("hidden");
     sectReports.classList.add("hidden")
@@ -58,13 +53,33 @@ btnBalance.addEventListener('click', () => {
     sectNewOp.classList.add("hidden")
     sectBalance.classList.remove("hidden")
 })
+// VISTA NUEVA OPERACIÓN
+$btnNewOp.addEventListener('click', () => {
+    sectBalance.classList.add("hidden");
+    sectCategories.classList.add("hidden")
+    sectReports.classList.add("hidden")
+    sectNewOp.classList.remove("hidden")
+})
 
-// GUARDAR INFO NUEVA OPERACION
+//----- GUARDAR INFO NUEVA OPERACION -----
 const $formNewOp = $('#new-op-form-container')
 const $btnNewOpAdd = $('#btn-new-op-add')
 
 $btnNewOp.addEventListener('submit', (event) => {
-    MediaEncryptedEvent.preventDefault()
+    event.preventDefault()
+
+    console.log("hola");
+
+    const newOp = {
+        id: crypto.randomUUID(),
+        description: event.target[0].value,
+        amount: Number(event.target[1].value),
+        type: event.target[2].value,
+        category: event.target[3].value,
+        date: dayjs(event.target[4].value).format("DD-MM-YYYY")
+    }
+
+    functions.addOperation(newOp)
 })
 
 
