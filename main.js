@@ -1,7 +1,17 @@
+// let functions
+// import("./functions.js").then((module) => {
+//     functions = module.default;
+//     console.log(functions);
+//   });
+
 const $ = (elem) => document.querySelector(elem);
 const $$ = (elem) => document.querySelectorAll(elem);
 
-// FUNCIÓN MENU HAMBUERGUESA Y VIEWS -
+
+// -----FUNCIÓN MENU HAMBUERGUESA Y VIEWS-----
+
+// FUNCIÓN MENU HAMBUERGUESA Y VIEWS 
+
 
 const $btnMenu = $('#button-menu');
 const $btnMenuClose = $('#button-menu-close');
@@ -9,10 +19,13 @@ const $navMenuMobile = $('#div-mobile-nav-list');
 const btnBalance = $('#nav-balance');
 const btnCategories = $('#nav-categorias');
 const btnReports = $('#nav-reportes');
+const $btnNewOp = $('#btn-new-operation');
 const sectBalance = $('#sect-balance');
+const sectNewOp = $('#sect-new-opetarion');
 const sectCategories = $('#sect-categories');
 const sectReports = $('#sect-reports');
 
+// ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
     $btnMenu.classList.add("hidden");
     $btnMenuClose.classList.remove("hidden")
@@ -26,22 +39,53 @@ $btnMenuClose.addEventListener('click', () => {
     $navMenuMobile.classList.add("hidden")
 })
 
+// VISTAS DE BALANCE, CATEGORÍAS Y REPORTES
 btnCategories.addEventListener('click', () => {
     sectBalance.classList.add("hidden");
     sectReports.classList.add("hidden")
+    sectNewOp.classList.add("hidden")
     sectCategories.classList.remove("hidden")
 });
 
 btnReports.addEventListener('click', () => {
     sectBalance.classList.add("hidden");
     sectCategories.classList.add("hidden")
+    sectNewOp.classList.add("hidden")
     sectReports.classList.remove("hidden")
 })
 
 btnBalance.addEventListener('click', () => {
     sectCategories.classList.add("hidden");
     sectReports.classList.add("hidden")
+    sectNewOp.classList.add("hidden")
     sectBalance.classList.remove("hidden")
+})
+// VISTA NUEVA OPERACIÓN
+$btnNewOp.addEventListener('click', () => {
+    sectBalance.classList.add("hidden");
+    sectCategories.classList.add("hidden")
+    sectReports.classList.add("hidden")
+    sectNewOp.classList.remove("hidden")
+})
+
+//----- GUARDAR INFO NUEVA OPERACION -----
+const $formNewOp = $('#new-op-form-container')
+
+$formNewOp.addEventListener('submit', (event) => {
+    event.preventDefault()
+
+    console.log("hola");
+
+    const newOp = {
+        id: crypto.randomUUID(),
+        description: event.target[0].value,
+        amount: Number(event.target[1].value),
+        type: event.target[2].value,
+        category: event.target[3].value,
+        date: event.target[4].value
+    }
+
+    addOperation(newOp)
 })
 
 
