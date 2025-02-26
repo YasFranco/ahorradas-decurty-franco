@@ -25,7 +25,8 @@ const sectNewOp = $('#sect-new-opetarion');
 const sectCategories = $('#sect-categories');
 const sectReports = $('#sect-reports');
 // ----- CONSTANTES SECCIÓN CATEGORIAS -------
-const $divCategoriesContainer = $("#categories-container")
+const $divCategoriesContainer = $("#categories-container");
+const $formNewCategory = $("#form-category");
 
 // ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
@@ -118,6 +119,23 @@ const showCategories = (arrayCategories) => {
    }
 
 }
+
+// AGREGAR NUEVA CATEGORIA
+$formNewCategory.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    console.log(event.target[0].value)
+
+    categories.push({
+        id: crypto.randomUUID(),
+        nameCategory: event.target[0].value
+    });
+
+    localStorage.setItem("category",JSON.stringify(categories));
+    showCategories(categories);
+})
+
+
 
 window.onload = () => {
     showCategories(categories)
