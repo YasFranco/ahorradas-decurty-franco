@@ -24,6 +24,8 @@ const sectBalance = $('#sect-balance');
 const sectNewOp = $('#sect-new-opetarion');
 const sectCategories = $('#sect-categories');
 const sectReports = $('#sect-reports');
+// ----- CONSTANTES SECCIÓN CATEGORIAS -------
+const $divCategoriesContainer = $("#categories-container")
 
 // ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
@@ -98,4 +100,21 @@ let categories = [{
 {
     id: crypto.randomUUID,
     nameCategory: "Servicios"
-}]
+}];
+
+// FUNCION MOSTRAR CATEGORIAS 
+const showCategories = (arrayCategories) => {
+   $divCategoriesContainer.innerHTML = "";
+
+   for (const {id, nameCategory} of arrayCategories) {
+    $divCategoriesContainer.innerHTML += `
+    <ul><li class="flex py-2 justify-between">${nameCategory}</li></ul> 
+    <div class="flex justify-around">
+       <button class="button-edit">Editar</button>
+       <button class="button-delete" >Eliminar</button>
+    </div>
+    `
+   }
+
+}
+
