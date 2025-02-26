@@ -107,14 +107,18 @@ const showCategories = (arrayCategories) => {
    $divCategoriesContainer.innerHTML = "";
 
    for (const {id, nameCategory} of arrayCategories) {
-    $divCategoriesContainer.innerHTML += `
-    <ul><li class="flex py-2 justify-between">${nameCategory}</li></ul> 
-    <div class="flex justify-around">
-       <button class="button-edit">Editar</button>
-       <button class="button-delete" >Eliminar</button>
+    $divCategoriesContainer.innerHTML += `<div class="flex justify-between p-4">
+    <ul><li class="border px-2 rounded-lg bg-emerald-100 text-emerald-600">${nameCategory}</li></ul> 
+    <div>
+       <button class="button-edit px-2 text-sky-700">Editar</button>
+       <button class="button-delete px-2 text-sky-700" >Eliminar</button>
+    </div>
     </div>
     `
    }
 
 }
 
+window.onload = () => {
+    showCategories(categories)
+}
