@@ -124,19 +124,44 @@ const showCategories = (arrayCategories) => {
 $formNewCategory.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    console.log(event.target[0].value)
+    // Hago esto para evitar espacios vacios y evitar que se ingrese algo vacio. 
+    const newCategory = event.target[0].value.trim();
+    if(!newCategory) return;
 
     categories.push({
         id: crypto.randomUUID(),
-        nameCategory: event.target[0].value
+        nameCategory: newCategory
     });
 
-    localStorage.setItem("category",JSON.stringify(categories));
-    showCategories(categories);
+    localStorage.setItem("category",JSON.stringify(categories))
+    const datos = JSON.parse(localStorage.getItem("category"));
+    // console.log(datos)
+
+    showCategories(datos)
+
+    // Borrar el contenido del formulario una vez presionado el boton agregar 
+    event.target.reset()
 })
 
 
 
 window.onload = () => {
-    showCategories(categories)
+    const datosLS = JSON.parse(localStorage.getItem("category"));
+    console.log(datosLS)
+    if(datosLS === null){
+        localStorage.setItem("category", JSON.stringify(categories));
+        // showCategories(datosLS)
+    }else{
+        showCategories(categories)
+    }
+    // showCategories(datosLS)
 }
+
+// const getDataLS = () => {
+//     const dataLS = JSON.parse(localStorage.getItem("category"));
+//     if(dataLS === null) {
+//         localStorage.setItem("category", JSON.stringify(categories));
+//     }else{
+//         dataLS
+//     }
+// }
