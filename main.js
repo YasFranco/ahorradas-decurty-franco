@@ -89,3 +89,13 @@ $formNewOp.addEventListener('submit', (event) => {
 })
 
 
+// -----CATEGORIAS--------
+
+let categories = [{
+    id: crypto.randomUUID,
+    nameCategory: "Trabajo"
+},
+{
+    id: crypto.randomUUID,
+    nameCategory: "Servicios"
+}]
