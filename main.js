@@ -1,8 +1,9 @@
-// let functions
-// import("./functions.js").then((module) => {
-//     functions = module.default;
-//     console.log(functions);
-//   });
+let functions
+import("./functions.js").then((module) => {
+    functions = module.default;
+    // console.log(functions);
+  });
+
 
 const $ = (elem) => document.querySelector(elem);
 const $$ = (elem) => document.querySelectorAll(elem);
@@ -77,7 +78,7 @@ const $formNewOp = $('#new-op-form-container')
 $formNewOp.addEventListener('submit', (event) => {
     event.preventDefault()
 
-    console.log("hola");
+    // console.log("hola");
 
     const newOp = {
         id: crypto.randomUUID(),
@@ -96,7 +97,7 @@ $formNewOp.addEventListener('submit', (event) => {
 
 let categories = [{
     id: crypto.randomUUID,
-    nameCategory: "Trabajo"
+    nameCategory: "Trabajo",
 },
 {
     id: crypto.randomUUID,
@@ -105,6 +106,7 @@ let categories = [{
 
 // FUNCION MOSTRAR CATEGORIAS 
 const showCategories = (arrayCategories) => {
+
    $divCategoriesContainer.innerHTML = "";
 
    for (const {id, nameCategory} of arrayCategories) {
@@ -125,19 +127,18 @@ $formNewCategory.addEventListener("submit", (event) => {
     event.preventDefault();
 
     // Hago esto para evitar espacios vacios y evitar que se ingrese algo vacio. 
-    const newCategory = event.target[0].value.trim();
-    if(!newCategory) return;
+    const category = event.target[0].value.trim();
+    if(!category) return;
 
-    categories.push({
+    const NewCategory = {
         id: crypto.randomUUID(),
-        nameCategory: newCategory
-    });
+        nameCategory: category
+    };
 
-    localStorage.setItem("category",JSON.stringify(categories))
-    const datos = JSON.parse(localStorage.getItem("category"));
-    // console.log(datos)
+    addCategory(NewCategory)
 
-    showCategories(datos)
+    const data = getData("category");
+    showCategories(data)
 
     // Borrar el contenido del formulario una vez presionado el boton agregar 
     event.target.reset()
@@ -146,22 +147,6 @@ $formNewCategory.addEventListener("submit", (event) => {
 
 
 window.onload = () => {
-    const datosLS = JSON.parse(localStorage.getItem("category"));
-    console.log(datosLS)
-    if(datosLS === null){
-        localStorage.setItem("category", JSON.stringify(categories));
-        // showCategories(datosLS)
-    }else{
-        showCategories(categories)
-    }
-    // showCategories(datosLS)
+    const data = getData("category");
+    showCategories(data);
 }
-
-// const getDataLS = () => {
-//     const dataLS = JSON.parse(localStorage.getItem("category"));
-//     if(dataLS === null) {
-//         localStorage.setItem("category", JSON.stringify(categories));
-//     }else{
-//         dataLS
-//     }
-// }

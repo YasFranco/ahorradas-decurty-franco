@@ -1,21 +1,27 @@
-let dataOperations = []
+// let dataOperations = []
 
-function readLocalStorage(key) {
+const getData = (key) => {
     const dataSave = JSON.parse(localStorage.getItem(key))
-    return dataSave;
+    return dataSave ? dataSave : [];
 }
 
-function saveLocalStorage(key, data) {
+const saveData = (key, data) => {
     localStorage.setItem(key, JSON.stringify(data))
 }
 
-function addOperation(newOperation) {
+const addOperation = (newOperation) => {
     dataOperations.push(newOperation)
-    saveLocalStorage("operation", dataOperations)
+    saveData("operation", dataOperations)
+}
+
+const addCategory = (objNewCategory) => {
+    const data = getData("category");
+    saveData("category", [...data, objNewCategory]);
 }
 
 // export default {
-//     readLocalStorage,
-//     saveLocalStorage,
-//     addOperation
+//     getData,
+//     saveData,
+//     addOperation, 
+//     addCategory
 // }
