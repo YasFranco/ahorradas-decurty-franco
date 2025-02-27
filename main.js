@@ -1,8 +1,9 @@
-// let functions
-// import("./functions.js").then((module) => {
-//     functions = module.default;
-//     console.log(functions);
-//   });
+let functions
+import("./functions.js").then((module) => {
+    functions = module.default;
+    // console.log(functions);
+  });
+
 
 const $ = (elem) => document.querySelector(elem);
 const $$ = (elem) => document.querySelectorAll(elem);
@@ -24,6 +25,9 @@ const sectBalance = $('#sect-balance');
 const sectNewOp = $('#sect-new-opetarion');
 const sectCategories = $('#sect-categories');
 const sectReports = $('#sect-reports');
+// ----- CONSTANTES SECCIÓN CATEGORIAS -------
+const $divCategoriesContainer = $("#categories-container");
+const $formNewCategory = $("#form-category");
 
 // ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
@@ -74,7 +78,7 @@ const $formNewOp = $('#new-op-form-container')
 $formNewOp.addEventListener('submit', (event) => {
     event.preventDefault()
 
-    console.log("hola");
+    // console.log("hola");
 
     const newOp = {
         id: crypto.randomUUID(),
@@ -89,3 +93,60 @@ $formNewOp.addEventListener('submit', (event) => {
 })
 
 
+// -----CATEGORIAS--------
+
+let categories = [{
+    id: crypto.randomUUID,
+    nameCategory: "Trabajo",
+},
+{
+    id: crypto.randomUUID,
+    nameCategory: "Servicios"
+}];
+
+// FUNCION MOSTRAR CATEGORIAS 
+const showCategories = (arrayCategories) => {
+
+   $divCategoriesContainer.innerHTML = "";
+
+   for (const {id, nameCategory} of arrayCategories) {
+    $divCategoriesContainer.innerHTML += `<div class="flex justify-between p-4">
+    <ul><li class="border px-2 rounded-lg bg-emerald-100 text-emerald-600">${nameCategory}</li></ul> 
+    <div>
+       <button class="button-edit px-2 text-sky-700">Editar</button>
+       <button class="button-delete px-2 text-sky-700" >Eliminar</button>
+    </div>
+    </div>
+    `
+   }
+
+}
+
+// AGREGAR NUEVA CATEGORIA
+$formNewCategory.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    // Hago esto para evitar espacios vacios y evitar que se ingrese algo vacio. 
+    const category = event.target[0].value.trim();
+    if(!category) return;
+
+    const NewCategory = {
+        id: crypto.randomUUID(),
+        nameCategory: category
+    };
+
+    addCategory(NewCategory)
+
+    const data = getData("category");
+    showCategories(data)
+
+    // Borrar el contenido del formulario una vez presionado el boton agregar 
+    event.target.reset()
+})
+
+
+
+window.onload = () => {
+    const data = getData("category");
+    showCategories(data);
+}
