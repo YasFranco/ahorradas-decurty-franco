@@ -17,14 +17,14 @@ const $$ = (elem) => document.querySelectorAll(elem);
 const $btnMenu = $('#button-menu');
 const $btnMenuClose = $('#button-menu-close');
 const $navMenuMobile = $('#div-mobile-nav-list');
-const btnBalance = $('#nav-balance');
-const btnCategories = $('#nav-categorias');
-const btnReports = $('#nav-reportes');
+const $btnBalance = $('#nav-balance');
+const $btnCategories = $('#nav-categorias');
+const $btnReports = $('#nav-reportes');
 const $btnNewOp = $('#btn-new-operation');
-const sectBalance = $('#sect-balance');
-const sectNewOp = $('#sect-new-opetarion');
-const sectCategories = $('#sect-categories');
-const sectReports = $('#sect-reports');
+const $sectBalance = $('#sect-balance');
+const $sectNewOp = $('#sect-new-opetarion');
+const $sectCategories = $('#sect-categories');
+const $sectReports = $('#sect-reports');
 // ----- CONSTANTES SECCIÓN CATEGORIAS -------
 const $divCategoriesContainer = $("#categories-container");
 const $formNewCategory = $("#form-category");
@@ -44,32 +44,32 @@ $btnMenuClose.addEventListener('click', () => {
 })
 
 // VISTAS DE BALANCE, CATEGORÍAS Y REPORTES
-btnCategories.addEventListener('click', () => {
-    sectBalance.classList.add("hidden");
-    sectReports.classList.add("hidden")
-    sectNewOp.classList.add("hidden")
-    sectCategories.classList.remove("hidden")
+$btnCategories.addEventListener('click', () => {
+    $sectBalance.classList.add("hidden");
+    $sectReports.classList.add("hidden")
+    $sectNewOp.classList.add("hidden")
+    $sectCategories.classList.remove("hidden")
 });
 
-btnReports.addEventListener('click', () => {
-    sectBalance.classList.add("hidden");
-    sectCategories.classList.add("hidden")
-    sectNewOp.classList.add("hidden")
-    sectReports.classList.remove("hidden")
+$btnReports.addEventListener('click', () => {
+    $sectBalance.classList.add("hidden");
+    $sectCategories.classList.add("hidden")
+    $sectNewOp.classList.add("hidden")
+    $sectReports.classList.remove("hidden")
 })
 
-btnBalance.addEventListener('click', () => {
-    sectCategories.classList.add("hidden");
-    sectReports.classList.add("hidden")
-    sectNewOp.classList.add("hidden")
-    sectBalance.classList.remove("hidden")
+$btnBalance.addEventListener('click', () => {
+    $sectCategories.classList.add("hidden");
+    $sectReports.classList.add("hidden")
+    $sectNewOp.classList.add("hidden")
+    $sectBalance.classList.remove("hidden")
 })
 // VISTA NUEVA OPERACIÓN
 $btnNewOp.addEventListener('click', () => {
-    sectBalance.classList.add("hidden");
-    sectCategories.classList.add("hidden")
-    sectReports.classList.add("hidden")
-    sectNewOp.classList.remove("hidden")
+    $sectBalance.classList.add("hidden");
+    $sectCategories.classList.add("hidden")
+    $sectReports.classList.add("hidden")
+    $sectNewOp.classList.remove("hidden")
 })
 
 //----- GUARDAR INFO NUEVA OPERACION -----
