@@ -28,6 +28,9 @@ const $sectReports = $('#sect-reports');
 // ----- CONSTANTES SECCIÓN CATEGORIAS -------
 const $divCategoriesContainer = $("#categories-container");
 const $formNewCategory = $("#form-category");
+// ---- CATEGORIA SELECT ------
+const $selectCategory = $("#select-new-op-category");
+const $selectCategoryFilter = $("#category-filter")
 
 // ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
@@ -143,6 +146,26 @@ $formNewCategory.addEventListener("submit", (event) => {
     // Borrar el contenido del formulario una vez presionado el boton agregar 
     event.target.reset()
 })
+
+
+$selectCategory.addEventListener("click", () =>{
+    const dataCategory = getData("category");
+    // console.log("dataCategory --->", dataCategory)
+
+    for (const {nameCategory} of dataCategory) {
+        $selectCategory.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
+     }
+},{once: true})
+
+$selectCategoryFilter.addEventListener("click", () =>{
+    const dataCategoryFilter = getData("category");
+    // console.log("dataCategory --->", dataCategory)
+
+    for (const {nameCategory} of dataCategoryFilter) {
+        $selectCategoryFilter.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
+     }
+},{once: true})
+
 
 
 
