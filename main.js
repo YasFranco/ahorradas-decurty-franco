@@ -2,7 +2,7 @@ let functions
 import("./functions.js").then((module) => {
     functions = module.default;
     // console.log(functions);
-  });
+});
 
 
 const $ = (elem) => document.querySelector(elem);
@@ -28,6 +28,8 @@ const $sectReports = $('#sect-reports');
 // ----- CONSTANTES SECCIÓN CATEGORIAS -------
 const $divCategoriesContainer = $("#categories-container");
 const $formNewCategory = $("#form-category");
+const $formCategoryEdit = $("#form-category-edit")
+const $inputEditCategory = $("#input-edit-category")
 // ---- CATEGORIA SELECT ------
 const $selectCategory = $("#select-new-op-category");
 const $selectCategoryFilter = $("#category-filter")
@@ -110,10 +112,10 @@ let categories = [{
 // FUNCION MOSTRAR CATEGORIAS 
 const showCategories = (arrayCategories) => {
 
-   $divCategoriesContainer.innerHTML = "";
+    $divCategoriesContainer.innerHTML = "";
 
-   for (const {id, nameCategory} of arrayCategories) {
-    $divCategoriesContainer.innerHTML += `<div class="flex justify-between p-4">
+    for (const { id, nameCategory } of arrayCategories) {
+        $divCategoriesContainer.innerHTML += `<div class="flex justify-between p-4">
     <ul><li class="border px-2 rounded-lg bg-emerald-100 text-emerald-600">${nameCategory}</li></ul> 
     <div>
        <button id="${id}" class="button-edit px-2 text-sky-700">Editar</button>
@@ -121,9 +123,9 @@ const showCategories = (arrayCategories) => {
     </div>
     </div>
     `
-   }
+    }
 
-   eventDeleteEdit()
+    eventDeleteEdit()
 
 }
 
@@ -140,11 +142,36 @@ const eventDeleteEdit = () => {
 
     for (const button of $$arrayButtonsEdit) {
         button.addEventListener("click", (e) => {
-            
+            $sectBalance.classList.add("hidden");
+            $sectReports.classList.add("hidden")
+            $sectNewOp.classList.add("hidden")
+            $formNewCategory.classList.add("hidden")
+            $sectCategories.classList.remove("hidden");
+            $formCategoryEdit.classList.remove("hidden")
+
+            const data = getData("category")
+            const findCategory = data.find(elem => elem.id === e.target.id);
+
+            $inputEditCategory.value = findCategory.nameCategory
+            $formCategoryEdit.id = findCategory.id
         })
     }
 }
 
+$formCategoryEdit.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const data = getData("category");
+    const findCategory = data.find(elem => elem.id === event.target.id);
+
+    const newData = {
+        nameCategory: event.target[0].value
+    }
+
+    const modifiedData = editData(findCategory.id, newData);
+
+    showCategories(modifiedData)
+})
 
 
 
@@ -157,7 +184,7 @@ $formNewCategory.addEventListener("submit", (event) => {
 
     // Hago esto para evitar espacios vacios y evitar que se ingrese algo vacio. 
     const category = event.target[0].value.trim();
-    if(!category) return;
+    if (!category) return;
 
     const NewCategory = {
         id: crypto.randomUUID(),
@@ -174,23 +201,23 @@ $formNewCategory.addEventListener("submit", (event) => {
 })
 
 
-$selectCategory.addEventListener("click", () =>{
+$selectCategory.addEventListener("click", () => {
     const dataCategory = getData("category");
     // console.log("dataCategory --->", dataCategory)
 
-    for (const {nameCategory} of dataCategory) {
+    for (const { nameCategory } of dataCategory) {
         $selectCategory.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
-     }
-},{once: true})
+    }
+}, { once: true })
 
-$selectCategoryFilter.addEventListener("click", () =>{
+$selectCategoryFilter.addEventListener("click", () => {
     const dataCategoryFilter = getData("category");
     // console.log("dataCategory --->", dataCategory)
 
-    for (const {nameCategory} of dataCategoryFilter) {
+    for (const { nameCategory } of dataCategoryFilter) {
         $selectCategoryFilter.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
-     }
-},{once: true})
+    }
+}, { once: true })
 
 
 

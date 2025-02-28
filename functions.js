@@ -28,6 +28,17 @@ const deleteData = (idData) => {
     return newArray
 }
 
+const editData = (idCategory, newData) => {
+    const data = getData("category");
+    const findId = data.findIndex((category) => category.id == idCategory)
+
+    data.splice(findId, 1, {...newData, id: idCategory})
+
+    saveData("category", data)
+
+    return data
+}
+
 // export default {
 //     getData,
 //     saveData,
