@@ -116,8 +116,8 @@ const showCategories = (arrayCategories) => {
     $divCategoriesContainer.innerHTML += `<div class="flex justify-between p-4">
     <ul><li class="border px-2 rounded-lg bg-emerald-100 text-emerald-600">${nameCategory}</li></ul> 
     <div>
-       <button class="button-edit px-2 text-sky-700">Editar</button>
-       <button class="button-delete px-2 text-sky-700" >Eliminar</button>
+       <button id="${id}" class="button-edit px-2 text-sky-700">Editar</button>
+       <button id="${id}" class="button-delete px-2 text-sky-700" >Eliminar</button>
     </div>
     </div>
     `
@@ -132,7 +132,10 @@ const eventDeleteEdit = () => {
     const $$arrayButtonsEdit = $$(".button-edit")
 
     for (const button of $$arrayButtonsDelete) {
-        console.log(button)
+        button.addEventListener("click", (e) => {
+            const newArray = deleteData(e.target.id)
+            showCategories(newArray)
+        })
     }
 }
 

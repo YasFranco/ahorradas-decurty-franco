@@ -19,6 +19,15 @@ const addCategory = (objNewCategory) => {
     saveData("category", [...data, objNewCategory]);
 }
 
+const deleteData = (idData) => {
+    const data = getData("category");
+    const newArray = data.filter(category => category.id !== idData)
+
+    saveData("category", newArray);
+
+    return newArray
+}
+
 // export default {
 //     getData,
 //     saveData,
