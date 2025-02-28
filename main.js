@@ -123,7 +123,24 @@ const showCategories = (arrayCategories) => {
     `
    }
 
+   eventDeleteEdit()
+
 }
+
+const eventDeleteEdit = () => {
+    const $$arrayButtonsDelete = $$(".button-delete");
+    const $$arrayButtonsEdit = $$(".button-edit")
+
+    for (const button of $$arrayButtonsDelete) {
+        console.log(button)
+    }
+}
+
+
+
+
+
+
 
 // AGREGAR NUEVA CATEGORIA
 $formNewCategory.addEventListener("submit", (event) => {
