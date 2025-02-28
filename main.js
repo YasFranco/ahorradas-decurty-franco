@@ -77,37 +77,9 @@ $btnNewOp.addEventListener('click', () => {
     $sectNewOp.classList.remove("hidden")
 })
 
-//----- GUARDAR INFO NUEVA OPERACION -----
-const $formNewOp = $('#new-op-form-container')
-
-$formNewOp.addEventListener('submit', (event) => {
-    event.preventDefault()
-
-    // console.log("hola");
-
-    const newOp = {
-        id: crypto.randomUUID(),
-        description: event.target[0].value,
-        amount: Number(event.target[1].value),
-        type: event.target[2].value,
-        category: event.target[3].value,
-        date: event.target[4].value
-    }
-
-    addOperation(newOp)
-})
-
-
 // -----CATEGORIAS--------
 
-let categories = [{
-    id: crypto.randomUUID,
-    nameCategory: "Trabajo",
-},
-{
-    id: crypto.randomUUID,
-    nameCategory: "Servicios"
-}];
+
 
 // FUNCION MOSTRAR CATEGORIAS 
 const showCategories = (arrayCategories) => {
@@ -174,10 +146,6 @@ $formCategoryEdit.addEventListener("submit", (event) => {
 })
 
 
-
-
-
-
 // AGREGAR NUEVA CATEGORIA
 $formNewCategory.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -200,6 +168,26 @@ $formNewCategory.addEventListener("submit", (event) => {
     event.target.reset()
 })
 
+
+//----- GUARDAR INFO NUEVA OPERACION -----
+const $formNewOp = $('#new-op-form-container')
+
+$formNewOp.addEventListener('submit', (event) => {
+    event.preventDefault()
+
+    // console.log("hola");
+
+    const newOp = {
+        id: crypto.randomUUID(),
+        description: event.target[0].value,
+        amount: Number(event.target[1].value),
+        type: event.target[2].value,
+        category: event.target[3].value,
+        date: event.target[4].value
+    }
+
+    addOperation(newOp)
+})
 
 $selectCategory.addEventListener("click", () => {
     const dataCategory = getData("category");
@@ -225,4 +213,5 @@ $selectCategoryFilter.addEventListener("click", () => {
 window.onload = () => {
     const data = getData("category");
     showCategories(data);
+
 }

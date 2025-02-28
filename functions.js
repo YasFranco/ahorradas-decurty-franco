@@ -1,4 +1,13 @@
 // let dataOperations = []
+let categories = [{
+    id: crypto.randomUUID,
+    nameCategory: "Trabajo",
+},
+{
+    id: crypto.randomUUID,
+    nameCategory: "Servicios"
+}];
+
 
 const getData = (key) => {
     const dataSave = JSON.parse(localStorage.getItem(key))
