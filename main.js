@@ -137,6 +137,12 @@ const eventDeleteEdit = () => {
             showCategories(newArray)
         })
     }
+
+    for (const button of $$arrayButtonsEdit) {
+        button.addEventListener("click", (e) => {
+            
+        })
+    }
 }
 
 
