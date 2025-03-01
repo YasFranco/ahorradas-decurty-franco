@@ -98,7 +98,7 @@ const showCategories = (arrayCategories) => {
     }
 
     eventDeleteEdit()
-
+    reloadCategories()
 }
 
 const eventDeleteEdit = () => {
@@ -160,7 +160,7 @@ $formNewCategory.addEventListener("submit", (event) => {
     };
 
     addCategory(NewCategory)
-
+    reloadCategories()
     const data = getData("category");
     showCategories(data)
 
@@ -189,25 +189,19 @@ $formNewOp.addEventListener('submit', (event) => {
     addOperation(newOp)
 })
 
-$selectCategory.addEventListener("click", () => {
-    const dataCategory = getData("category");
-    // console.log("dataCategory --->", dataCategory)
-
-    for (const { nameCategory } of dataCategory) {
-        $selectCategory.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
-    }
-}, { once: true })
-
-$selectCategoryFilter.addEventListener("click", () => {
+// ReloadCategories reduce a una función la actualización de categorias de agregar, editar y eliminar en los selects de balance, se solucionan errores y se agrega la función reloadCategories a la línea 162 y 101 para que funcione correctamente en agregar,editar y eliminar.
+const reloadCategories = () => {
     const dataCategoryFilter = getData("category");
-    // console.log("dataCategory --->", dataCategory)
-
+    $selectCategoryFilter.innerHTML = ""
     for (const { nameCategory } of dataCategoryFilter) {
         $selectCategoryFilter.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
     }
-}, { once: true })
-
-
+    const dataCategory = getData("category");
+    $selectCategory.innerHTML = ""
+    for (const { nameCategory } of dataCategory) {
+        $selectCategory.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
+    }
+}
 
 
 window.onload = () => {
