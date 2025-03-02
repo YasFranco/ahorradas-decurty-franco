@@ -2,7 +2,7 @@ let functions
 import("./functions.js").then((module) => {
     functions = module.default;
     // console.log(functions);
-  });
+});
 
 
 const $ = (elem) => document.querySelector(elem);
@@ -28,6 +28,8 @@ const $sectReports = $('#sect-reports');
 // ----- CONSTANTES SECCIÓN CATEGORIAS -------
 const $divCategoriesContainer = $("#categories-container");
 const $formNewCategory = $("#form-category");
+const $formCategoryEdit = $("#form-category-edit")
+const $inputEditCategory = $("#input-edit-category")
 // ---- CATEGORIA SELECT ------
 const $selectCategory = $("#select-new-op-category");
 const $selectCategoryFilter = $("#category-filter")
@@ -75,6 +77,98 @@ $btnNewOp.addEventListener('click', () => {
     $sectNewOp.classList.remove("hidden")
 })
 
+// -----CATEGORIAS--------
+
+
+
+// FUNCION MOSTRAR CATEGORIAS 
+const showCategories = (arrayCategories) => {
+
+    $divCategoriesContainer.innerHTML = "";
+
+    for (const { id, nameCategory } of arrayCategories) {
+        $divCategoriesContainer.innerHTML += `<div class="flex justify-between p-4">
+    <ul><li class="border px-2 rounded-lg bg-emerald-100 text-emerald-600">${nameCategory}</li></ul> 
+    <div>
+       <button id="${id}" class="button-edit px-2 text-sky-700">Editar</button>
+       <button id="${id}" class="button-delete px-2 text-sky-700" >Eliminar</button>
+    </div>
+    </div>
+    `
+    }
+
+    eventDeleteEdit()
+    reloadCategories()
+}
+
+const eventDeleteEdit = () => {
+    const $$arrayButtonsDelete = $$(".button-delete");
+    const $$arrayButtonsEdit = $$(".button-edit")
+
+    for (const button of $$arrayButtonsDelete) {
+        button.addEventListener("click", (e) => {
+            const newArray = deleteData(e.target.id)
+            showCategories(newArray)
+        })
+    }
+
+    for (const button of $$arrayButtonsEdit) {
+        button.addEventListener("click", (e) => {
+            $sectBalance.classList.add("hidden");
+            $sectReports.classList.add("hidden")
+            $sectNewOp.classList.add("hidden")
+            $formNewCategory.classList.add("hidden")
+            $sectCategories.classList.remove("hidden");
+            $formCategoryEdit.classList.remove("hidden")
+
+            const data = getData("category")
+            const findCategory = data.find(elem => elem.id === e.target.id);
+
+            $inputEditCategory.value = findCategory.nameCategory
+            $formCategoryEdit.id = findCategory.id
+        })
+    }
+}
+
+$formCategoryEdit.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const data = getData("category");
+    const findCategory = data.find(elem => elem.id === event.target.id);
+
+    const newData = {
+        nameCategory: event.target[0].value
+    }
+
+    const modifiedData = editData(findCategory.id, newData);
+
+    showCategories(modifiedData)
+})
+
+
+// AGREGAR NUEVA CATEGORIA
+$formNewCategory.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    // Hago esto para evitar espacios vacios y evitar que se ingrese algo vacio. 
+    const category = event.target[0].value.trim();
+    if (!category) return;
+
+    const NewCategory = {
+        id: crypto.randomUUID(),
+        nameCategory: category
+    };
+
+    addCategory(NewCategory)
+    reloadCategories()
+    const data = getData("category");
+    showCategories(data)
+
+    // Borrar el contenido del formulario una vez presionado el boton agregar 
+    event.target.reset()
+})
+
+
 //----- GUARDAR INFO NUEVA OPERACION -----
 const $formNewOp = $('#new-op-form-container')
 
@@ -95,81 +189,23 @@ $formNewOp.addEventListener('submit', (event) => {
     addOperation(newOp)
 })
 
-
-// -----CATEGORIAS--------
-
-let categories = [{
-    id: crypto.randomUUID,
-    nameCategory: "Trabajo",
-},
-{
-    id: crypto.randomUUID,
-    nameCategory: "Servicios"
-}];
-
-// FUNCION MOSTRAR CATEGORIAS 
-const showCategories = (arrayCategories) => {
-
-   $divCategoriesContainer.innerHTML = "";
-
-   for (const {id, nameCategory} of arrayCategories) {
-    $divCategoriesContainer.innerHTML += `<div class="flex justify-between p-4">
-    <ul><li class="border px-2 rounded-lg bg-emerald-100 text-emerald-600">${nameCategory}</li></ul> 
-    <div>
-       <button class="button-edit px-2 text-sky-700">Editar</button>
-       <button class="button-delete px-2 text-sky-700" >Eliminar</button>
-    </div>
-    </div>
-    `
-   }
-
-}
-
-// AGREGAR NUEVA CATEGORIA
-$formNewCategory.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    // Hago esto para evitar espacios vacios y evitar que se ingrese algo vacio. 
-    const category = event.target[0].value.trim();
-    if(!category) return;
-
-    const NewCategory = {
-        id: crypto.randomUUID(),
-        nameCategory: category
-    };
-
-    addCategory(NewCategory)
-
-    const data = getData("category");
-    showCategories(data)
-
-    // Borrar el contenido del formulario una vez presionado el boton agregar 
-    event.target.reset()
-})
-
-
-$selectCategory.addEventListener("click", () =>{
-    const dataCategory = getData("category");
-    // console.log("dataCategory --->", dataCategory)
-
-    for (const {nameCategory} of dataCategory) {
-        $selectCategory.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
-     }
-},{once: true})
-
-$selectCategoryFilter.addEventListener("click", () =>{
+// ReloadCategories reduce a una función la actualización de categorias de agregar, editar y eliminar en los selects de balance, se solucionan errores y se agrega la función reloadCategories a la línea 162 y 101 para que funcione correctamente en agregar,editar y eliminar.
+const reloadCategories = () => {
     const dataCategoryFilter = getData("category");
-    // console.log("dataCategory --->", dataCategory)
-
-    for (const {nameCategory} of dataCategoryFilter) {
+    $selectCategoryFilter.innerHTML = ""
+    for (const { nameCategory } of dataCategoryFilter) {
         $selectCategoryFilter.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
-     }
-},{once: true})
-
-
+    }
+    const dataCategory = getData("category");
+    $selectCategory.innerHTML = ""
+    for (const { nameCategory } of dataCategory) {
+        $selectCategory.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
+    }
+}
 
 
 window.onload = () => {
     const data = getData("category");
     showCategories(data);
+
 }
