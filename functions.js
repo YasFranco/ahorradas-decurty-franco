@@ -1,4 +1,4 @@
-// let dataOperations = []
+let dataOperations = []
 let categories = [{
     id: crypto.randomUUID,
     nameCategory: "Trabajo",

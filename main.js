@@ -33,7 +33,9 @@ const $inputEditCategory = $("#input-edit-category")
 // ---- CATEGORIA SELECT ------
 const $selectCategory = $("#select-new-op-category");
 const $selectCategoryFilter = $("#category-filter")
-
+// ----- OPERACIONES
+const $formNewOp = $('#new-op-form-container');
+const $sectOperations = $('#div-show-operations');
 // ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
     $btnMenu.classList.add("hidden");
@@ -76,6 +78,36 @@ $btnNewOp.addEventListener('click', () => {
     $sectReports.classList.add("hidden")
     $sectNewOp.classList.remove("hidden")
 })
+
+$formNewOp.addEventListener('submit', () => {
+    $sectNewOp.classList.add("hidden")
+    $sectCategories.classList.add("hidden")
+    $sectReports.classList.add("hidden")
+    $sectBalance.classList.remove("hidden")
+})
+
+// ---- MOSTRAR OPERACIONES ----
+
+const showOperations = () => {
+    const dataNewOperations = getData("dataOperations")
+    $sectOperations.innerHTML = "";
+
+    for (const {id, description, amount, category, date} of dataNewOperations) {
+        $sectOperations.innerHTML += ` 
+                <div class="flex">
+                <p class="w-2/5">${description}</p>
+                <p class="w-2/5">${category}</p>
+                <p class="w-2/5">${date}</p>
+                <p class="w-2/5">${amount}</p>
+                <div class="w-2/5">
+                    <button id="${id}" >Editar</button>
+                    <button id="${id}" >Eliminar</button>
+                </div>
+            </div>
+             </div>`
+    }
+}
+
 
 // -----CATEGORIAS--------
 
@@ -170,14 +202,15 @@ $formNewCategory.addEventListener("submit", (event) => {
 
 
 //----- GUARDAR INFO NUEVA OPERACION -----
-const $formNewOp = $('#new-op-form-container')
+
 
 $formNewOp.addEventListener('submit', (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     // console.log("hola");
 
     const newOp = {
+        
         id: crypto.randomUUID(),
         description: event.target[0].value,
         amount: Number(event.target[1].value),
@@ -187,7 +220,11 @@ $formNewOp.addEventListener('submit', (event) => {
     }
 
     addOperation(newOp)
+    showOperations(getData)
+    event.target.reset()
 })
+
+
 
 // ReloadCategories reduce a una función la actualización de categorias de agregar, editar y eliminar en los selects de balance, se solucionan errores y se agrega la función reloadCategories a la línea 162 y 101 para que funcione correctamente en agregar,editar y eliminar.
 const reloadCategories = () => {
@@ -207,5 +244,5 @@ const reloadCategories = () => {
 window.onload = () => {
     const data = getData("category");
     showCategories(data);
-
+    showOperations(getData);
 }
