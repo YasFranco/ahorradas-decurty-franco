@@ -89,11 +89,20 @@ $formNewOp.addEventListener('submit', () => {
 // ---- MOSTRAR OPERACIONES ----
 
 const showOperations = () => {
-    const dataNewOperations = getData("dataOperations")
+    //const dataNewOperations = getData("dataOperations")
+    const dataNewOperations = getData("operation")
     $sectOperations.innerHTML = "";
 
     for (const {id, description, amount, category, date} of dataNewOperations) {
         $sectOperations.innerHTML += ` 
+            <div class="flex flex-col mt-8">
+                <div class="hidden flex lg:block lg:flex">
+                    <p class="w-2/5">Descripción</p>
+                    <p class="w-2/5">Categoría</p>
+                    <p class="w-2/5">Fecha</p>
+                    <p class="w-2/5">Monto</p>
+                    <p class="w-2/5">Acciones</p>
+                </div>
                 <div class="flex">
                 <p class="w-2/5">${description}</p>
                 <p class="w-2/5">${category}</p>
@@ -244,5 +253,5 @@ const reloadCategories = () => {
 window.onload = () => {
     const data = getData("category");
     showCategories(data);
-    showOperations(getData);
+    showOperations();
 }
