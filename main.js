@@ -284,11 +284,16 @@ $("#category-filter").addEventListener("input", (e) => {
     const filterCategory = dataOperation.filter(operation => operation.category === e.target.value)
 
     // console.log('categoria filtrada', filterCategory)
-    showCategories(filterCategory)
+    showOperations(filterCategory)
 })
 
 // filtrar desde x fecha 
+$("#date-filter").addEventListener("input", (e) => {
+    const data = getData("operation");
 
+    const filterDate = data.filter(operation => operation.date >= e.target.value);
+    showOperations(filterDate)
+})
 
 window.onload = () => {
     const data = getData("category");
