@@ -262,12 +262,29 @@ const reloadCategories = () => {
 // filtrar por tipo: ganancia o gastos
 $("#type-filter").addEventListener("input", (e) => {
     const data = getData("operation");
-    if(e.target.value !== "Todos"){
-        const filterOperation = data.filter( operation => operation.type === e.target.value);
-        showOperations(filterOperation)
+    if(e.target.value !== "all"){
+        const filterType = data.filter( operation => operation.type === e.target.value);
+        // console.log("aca muestra la data filtrada", filterType) esto funciona pero no lo muestra en pantalla 
+        showOperations(filterType)
     } else {
         showOperations(data)
     }
+    // console.log(e.target.value)
+    console.log(data)
+})
+
+// filtrar por categoria 
+$("#category-filter").addEventListener("input", (e) => {
+    const dataOperation = getData("operation");
+    const dataCategory = getData("category")
+
+    // console.log("estas son las categorias",dataCategory);
+    // console.log("estas son las operaciones", dataOperation);
+
+    const filterCategory = dataOperation.filter(operation => operation.category === e.target.value)
+
+    // console.log('categoria filtrada', filterCategory)
+    showCategories(filterCategory)
 })
 
 
