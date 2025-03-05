@@ -258,6 +258,18 @@ const reloadCategories = () => {
     }
 }
 
+// --------- SECCIÓN FILTROS --------------
+// filtrar por tipo: ganancia o gastos
+$("#type-filter").addEventListener("input", (e) => {
+    const data = getData("operation");
+    if(e.target.value !== "Todos"){
+        const filterOperation = data.filter( operation => operation.type === e.target.value);
+        showOperations(filterOperation)
+    } else {
+        showOperations(data)
+    }
+})
+
 
 window.onload = () => {
     const data = getData("category");
