@@ -36,7 +36,6 @@ const $selectCategoryFilter = $("#category-filter")
 // ----- OPERACIONES
 const $formNewOp = $('#new-op-form-container');
 const $sectOperations = $('#div-show-operations');
-const $sectOpNone = $('#div-show-operations-none');
 // ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
     $btnMenu.classList.add("hidden");
@@ -89,10 +88,17 @@ $formNewOp.addEventListener('submit', () => {
 
 // ---- MOSTRAR OPERACIONES ----
 
+
 const showOperations = () => {
-    //const dataNewOperations = getData("dataOperations")
+    const $sectOpNone = $('#div-show-operations-none');
+    $sectOpNone.classList.add("hidden");
+    
     const dataNewOperations = getData("operation")
     $sectOperations.innerHTML = "";
+
+    if (dataNewOperations.length === 0) {
+        $sectOpNone.classList.remove("hidden");
+    }
 
     for (const {id, description, amount, category, date} of dataNewOperations) {
         $sectOperations.innerHTML += ` 
@@ -116,7 +122,10 @@ const showOperations = () => {
             </div>
              </div>`
     }
+
 }
+
+
 
 
 // -----CATEGORIAS--------
@@ -217,7 +226,6 @@ $formNewCategory.addEventListener("submit", (event) => {
 $formNewOp.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    // console.log("hola");
 
     const newOp = {
         
@@ -253,6 +261,7 @@ const reloadCategories = () => {
 
 window.onload = () => {
     const data = getData("category");
-    showCategories(data);
-    showOperations();
+    showCategories(data); 
+    const operations = getData("operation"); 
+    showOperations(operations); 
 }
