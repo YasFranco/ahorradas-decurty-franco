@@ -36,6 +36,7 @@ const $selectCategoryFilter = $("#category-filter")
 // ----- OPERACIONES
 const $formNewOp = $('#new-op-form-container');
 const $sectOperations = $('#div-show-operations');
+const $sectOpNone = $('#div-show-operations-none');
 // ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
     $btnMenu.classList.add("hidden");
