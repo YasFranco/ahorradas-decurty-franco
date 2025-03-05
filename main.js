@@ -234,7 +234,7 @@ $formNewOp.addEventListener('submit', (event) => {
         amount: Number(event.target[1].value),
         type: event.target[2].value,
         category: event.target[3].value,
-        date: event.target[4].value
+        date: dayjs(event.target[2].value).format("YYYY-MM-DD"),
     }
 
     addOperation(newOp)
@@ -286,6 +286,8 @@ $("#category-filter").addEventListener("input", (e) => {
     // console.log('categoria filtrada', filterCategory)
     showCategories(filterCategory)
 })
+
+// filtrar desde x fecha 
 
 
 window.onload = () => {
