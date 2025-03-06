@@ -8,103 +8,75 @@ import("./functions.js").then((module) => {
 const $ = (elem) => document.querySelector(elem);
 const $$ = (elem) => document.querySelectorAll(elem);
 
-
-// -----FUNCIÓN MENU HAMBUERGUESA Y VIEWS-----
-
-// FUNCIÓN MENU HAMBUERGUESA Y VIEWS 
-
-
-const $btnMenu = $('#button-menu');
+// ------------------ CONSTANTES DOM --------------------
+const $btnMenu = $('#button-menu')
 const $btnMenuClose = $('#button-menu-close');
 const $navMenuMobile = $('#div-mobile-nav-list');
-const $btnBalance = $('#nav-balance');
-const $btnCategories = $('#nav-categorias');
-const $btnReports = $('#nav-reportes');
-const $btnNewOp = $('#btn-new-operation');
 const $sectBalance = $('#sect-balance');
 const $sectNewOp = $('#sect-new-opetarion');
 const $sectCategories = $('#sect-categories');
 const $sectReports = $('#sect-reports');
-// ----- CONSTANTES SECCIÓN CATEGORIAS -------
+// categorias
 const $divCategoriesContainer = $("#categories-container");
 const $formNewCategory = $("#form-category");
 const $formCategoryEdit = $("#form-category-edit")
-const $inputEditCategory = $("#input-edit-category")
-// ---- CATEGORIA SELECT ------
 const $selectCategory = $("#select-new-op-category");
 const $selectCategoryFilter = $("#category-filter")
-// ----- OPERACIONES
+// operaciones
 const $formNewOp = $('#new-op-form-container');
 const $sectOperations = $('#div-show-operations');
 const $editFormNewOp = $("#edit-op-form-container");
-const $divFormNewOp = $('#div-new-operation');
-const $titleFormEdit = $('#title-edit-operation')
-const $titleFormNew = $('#title-new-operation')
-// ICONO Y VISTA MOBILE MENU
-$btnMenu.addEventListener('click', () => {
-    $btnMenu.classList.add("hidden");
-    $btnMenuClose.classList.remove("hidden")
-    $navMenuMobile.classList.remove("hidden")
 
+
+// --------------BOTONES VISTAS -----------------------
+$btnMenu.addEventListener('click', () => {
+    showElement([$btnMenuClose,$navMenuMobile])
+    hideElement([$btnMenu])
 })
 
 $btnMenuClose.addEventListener('click', () => {
-    $btnMenu.classList.remove("hidden");
-    $btnMenuClose.classList.add("hidden")
-    $navMenuMobile.classList.add("hidden")
+    showElement([$btnMenu])
+    hideElement([$btnMenuClose, $navMenuMobile])
 })
 
-// VISTAS DE BALANCE, CATEGORÍAS Y REPORTES
-$btnCategories.addEventListener('click', () => {
-    $sectBalance.classList.add("hidden");
-    $sectReports.classList.add("hidden")
-    $sectNewOp.classList.add("hidden")
-    $sectCategories.classList.remove("hidden")
+$('#nav-categorias').addEventListener('click', () => {
+    showElement([$sectCategories])
+    hideElement([$sectBalance, $sectReports, $sectNewOp])
 });
 
-$btnReports.addEventListener('click', () => {
-    $sectBalance.classList.add("hidden");
-    $sectCategories.classList.add("hidden")
-    $sectNewOp.classList.add("hidden")
-    $sectReports.classList.remove("hidden")
+$('#nav-reportes').addEventListener('click', () => {
+    showElement([$sectReports])
+    hideElement([$sectNewOp, $sectCategories, $sectBalance])
 })
 
-$btnBalance.addEventListener('click', () => {
-    $sectCategories.classList.add("hidden");
-    $sectReports.classList.add("hidden")
-    $sectNewOp.classList.add("hidden")
-    $sectBalance.classList.remove("hidden")
+$('#nav-balance').addEventListener('click', () => {
+    showElement([$sectBalance]);
+    hideElement([$sectCategories, $sectReports, $sectNewOp])
 })
-// VISTA NUEVA OPERACIÓN
-$btnNewOp.addEventListener('click', () => {
-    $sectBalance.classList.add("hidden");
-    $sectCategories.classList.add("hidden")
-    $sectReports.classList.add("hidden")
-    $sectNewOp.classList.remove("hidden")
+
+$('#btn-new-operation').addEventListener('click', () => {
+    showElement([$sectNewOp]);
+    hideElement([$sectBalance, $sectCategories, $sectReports])
 })
 
 $formNewOp.addEventListener('submit', () => {
-    $sectNewOp.classList.add("hidden")
-    $sectCategories.classList.add("hidden")
-    $sectReports.classList.add("hidden")
-    $sectBalance.classList.remove("hidden")
+    showElement([$sectBalance]);
+    hideElement([$sectNewOp, $sectCategories, $sectReports])
 })
 
-// ---- MOSTRAR OPERACIONES ----
+// -------------- SECCION OPERACIONES ---------------------
 
 
 const showOperations = (arrayOperations) => {
     const $sectOpNone = $('#div-show-operations-none');
     $sectOpNone.classList.add("hidden");
     
-    // const dataNewOperations = getData("operation")
     $sectOperations.innerHTML = "";
 
     if (arrayOperations.length === 0) {
         $sectOpNone.classList.remove("hidden");
     }
 
-    // {id, description, amount, category, date}
     for (const operation of arrayOperations) {
         const sign = operation.type === "expenses" ? "-" : "+";
         const colorClass = operation.type === "expenses" ? "text-red-500" : "text-green-500";
@@ -135,14 +107,78 @@ const showOperations = (arrayOperations) => {
     updateBalance();
 }
 
+const eventDeleteEditOperation = () => {
+    const $$arrayButtonsDeleteOp = $$(".button-delete-op");
+    const $$arrayButtonsEditOp = $$(".button-edit-op")
 
-// ------ BALANCE --------
+    for (const button of $$arrayButtonsDeleteOp) {
+        button.addEventListener("click", (e) => {
+            const newArray = deleteDataOp(e.target.id)
+            showOperations(newArray)
+        })
+    }
 
+    for (const button of $$arrayButtonsEditOp) {
+        button.addEventListener("click", (e) => {
+
+            showElement([$sectNewOp, $editFormNewOp, $('#title-edit-operation')]);
+            hideElement([$sectCategories, $sectReports, $sectBalance, $formNewOp, $('#title-new-operation')])
+
+            const data = getData("operation")
+            const findOperation = data.find(elem => elem.id === e.target.id);
+
+            $("#input-edit-op-description").value = findOperation.description
+            $("#select-edit-op-type").value = findOperation.type
+            $("#select-edit-op-category").value = findOperation.category
+            $("#input-edit-op-date").value = findOperation.date
+            $("#input-edit-op-amount").value = findOperation.amount
+            
+        })
+    }
+}
+
+$formNewOp.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const newOp = {
+        id: crypto.randomUUID(),
+        description: event.target[0].value,
+        amount: Number(event.target[1].value),
+        type: event.target[2].value,
+        category: event.target[3].value,
+        date: event.target[4].value,
+    }
+
+    addOperation(newOp)
+    const data = getData("operation");
+    showOperations(data)
+    event.target.reset()
+})
+
+$editFormNewOp.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const data = getData("operation");
+    const findOperation = data.find(elem => elem.id === event.target.id);
+
+    const newData = {
+        description: event.target[0].value,
+        amount: Number(event.target[1].value),
+        type: event.target[2].value,
+        category: event.target[3].value,
+        date: event.target[4].value
+    }
+
+    const modifiedData = editDataOp(findOperation.id, newData);
+    showOperations(modifiedData);
+})
+
+
+// --------------- SECCIÓN BALANCE ---------------------------
 
 const updateBalance = () => {
     const data = getData("operation");
     const addEarnings = data.filter(operation => operation.type === "earnings").reduce ((add, operation) => add + Number(operation.amount), 0);
-    
     const addExpenses = data.filter(operation => operation.type === "expenses").reduce ((add, operation) => add + Number(operation.amount), 0);
 
     const addTotal = addEarnings - addExpenses 
@@ -153,14 +189,7 @@ const updateBalance = () => {
 
 }
 
-
-
-
-// -----CATEGORIAS--------
-
-
-
-// FUNCION MOSTRAR CATEGORIAS 
+//---------------- SECCIÓN CATEGORIAS ----------------------- 
 const showCategories = (arrayCategories) => {
 
     $divCategoriesContainer.innerHTML = "";
@@ -193,142 +222,18 @@ const eventDeleteEditCategory = () => {
 
     for (const button of $$arrayButtonsEdit) {
         button.addEventListener("click", (e) => {
-            $sectBalance.classList.add("hidden");
-            $sectReports.classList.add("hidden")
-            $sectNewOp.classList.add("hidden")
-            $formNewCategory.classList.add("hidden")
-            $sectCategories.classList.remove("hidden");
-            $formCategoryEdit.classList.remove("hidden")
+            showElement([$sectCategories, $formCategoryEdit]);
+            hideElement([$sectBalance, $sectReports, $sectNewOp, $formNewCategory])
 
             const data = getData("category")
             const findCategory = data.find(elem => elem.id === e.target.id);
 
-            $inputEditCategory.value = findCategory.nameCategory
+            $("#input-edit-category").value = findCategory.nameCategory
             $formCategoryEdit.id = findCategory.id
         })
     }
 }
 
-const eventDeleteEditOperation = () => {
-    const $$arrayButtonsDeleteOp = $$(".button-delete-op");
-    const $$arrayButtonsEditOp = $$(".button-edit-op")
-
-    for (const button of $$arrayButtonsDeleteOp) {
-        button.addEventListener("click", (e) => {
-            const newArray = deleteDataOp(e.target.id)
-            showOperations(newArray)
-        })
-    }
-
-    for (const button of $$arrayButtonsEditOp) {
-        button.addEventListener("click", (e) => {
-
-            $sectNewOp.classList.remove("hidden")
-            $sectCategories.classList.add("hidden")
-            $sectReports.classList.add("hidden")
-            $sectBalance.classList.add("hidden")
-            $editFormNewOp.classList.remove("hidden")
-            $formNewOp.classList.add("hidden")
-            $titleFormEdit.classList.remove("hidden")
-            $titleFormNew.classList.add("hidden")
-
-            const data = getData("operation")
-            const findOperation = data.find(elem => elem.id === e.target.id);
-            console.log(findOperation)
-
-            $("#input-edit-op-description").value = findOperation.description
-            $("#select-edit-op-type").value = findOperation.type
-            $("#select-edit-op-category").value = findOperation.category
-            $("#input-edit-op-date").value = findOperation.date
-            $("#input-edit-op-amount").value = findOperation.amount
-            
-        })
-    }
-}
-
-$editFormNewOp.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const data = getData("operation");
-    const findOperation = data.find(elem => elem.id === event.target.id);
-
-    const newData = {
-        description: event.target[0].value,
-        amount: Number(event.target[1].value),
-        type: event.target[2].value,
-        category: event.target[3].value,
-        date: event.target[4].value
-    }
-
-    const modifiedData = editDataOp(findOperation.id, newData);
-    showOperations(modifiedData);
-})
-
-$formCategoryEdit.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const data = getData("category");
-    const findCategory = data.find(elem => elem.id === event.target.id);
-
-    const newData = {
-        nameCategory: event.target[0].value
-    }
-
-    const modifiedData = editData(findCategory.id, newData);
-
-    showCategories(modifiedData)
-})
-
-
-// AGREGAR NUEVA CATEGORIA
-$formNewCategory.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    // Hago esto para evitar espacios vacios y evitar que se ingrese algo vacio. 
-    const category = event.target[0].value.trim();
-    if (!category) return;
-
-    const NewCategory = {
-        id: crypto.randomUUID(),
-        nameCategory: category
-    };
-
-    addCategory(NewCategory)
-    reloadCategories()
-    const data = getData("category");
-    showCategories(data)
-
-    // Borrar el contenido del formulario una vez presionado el boton agregar 
-    event.target.reset()
-})
-
-
-//----- GUARDAR INFO NUEVA OPERACION -----
-
-
-$formNewOp.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-
-    const newOp = {
-        
-        id: crypto.randomUUID(),
-        description: event.target[0].value,
-        amount: Number(event.target[1].value),
-        type: event.target[2].value,
-        category: event.target[3].value,
-        date: event.target[4].value,
-    }
-
-    addOperation(newOp)
-    const data = getData("operation");
-    showOperations(data)
-    event.target.reset()
-})
-
-
-
-// ReloadCategories reduce a una función la actualización de categorias de agregar, editar y eliminar en los selects de balance, se solucionan errores y se agrega la función reloadCategories a la línea 162 y 101 para que funcione correctamente en agregar,editar y eliminar.
 const reloadCategories = () => {
     const dataCategoryFilter = getData("category");
     $selectCategoryFilter.innerHTML = `<option value="all">Todos</option>`
@@ -346,23 +251,53 @@ const reloadCategories = () => {
         $("#select-edit-op-category").innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
 } }
 
-// --------- SECCIÓN FILTROS --------------
-// filtrar por tipo: ganancia o gastos
+$formNewCategory.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const category = event.target[0].value.trim();
+    if (!category) return;
+
+    const NewCategory = {
+        id: crypto.randomUUID(),
+        nameCategory: category
+    };
+
+    addCategory(NewCategory)
+    reloadCategories()
+    const data = getData("category");
+    showCategories(data)
+
+    event.target.reset()
+})
+
+$formCategoryEdit.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const data = getData("category");
+    const findCategory = data.find(elem => elem.id === event.target.id);
+
+    const newData = {
+        nameCategory: event.target[0].value
+    }
+
+    const modifiedData = editData(findCategory.id, newData);
+    showCategories(modifiedData)
+})
+
+
+// ---------------- SECCIÓN FILTROS --------------------------
+
 $("#type-filter").addEventListener("input", (e) => {
     const data = getData("operation");
     
     if(e.target.value !== "all"){
         const filterType = data.filter( operation => operation.type === e.target.value);
-        // console.log("aca muestra la data filtrada", filterType)
         showOperations(filterType)
     } else {
         showOperations(data)
     }
-    // console.log(e.target.value)
-    // console.log(data)
 })
 
-// filtrar por categoria 
 $("#category-filter").addEventListener("input", (e) => {
     const dataOperation = getData("operation");
 
@@ -372,12 +307,8 @@ $("#category-filter").addEventListener("input", (e) => {
     } else {
         showOperations(dataOperation)
     }
-
-    // console.log('categoria filtrada', filterCategory)
-    
 })
 
-// filtrar desde x fecha 
 $("#date-filter").addEventListener("input", (e) => {
     const data = getData("operation");
 
@@ -385,12 +316,10 @@ $("#date-filter").addEventListener("input", (e) => {
     showOperations(filterDate)
 });
 
-// ordenar por 
 $("#order-filter").addEventListener("input", (e) => {
     const data = getData("operation");
     let dataDup = [...data]
-
-    // console.log(e.target.value)    
+  
     if(e.target.value === "more-recent"){
         const filterMoreRecent = dataDup.sort((a,b) => new Date(b.date) - new Date(a.date))
         return showOperations(filterMoreRecent);
@@ -412,6 +341,20 @@ $("#order-filter").addEventListener("input", (e) => {
     }
 })
 
+
+// ------------------ FUNCIONES AUXILIARES -----------------------
+const showElement = (selectors) => {
+    for (const selector of selectors) {
+        selector.classList.remove("hidden")
+    }
+};
+
+const hideElement = (selectors) => {
+    for (const selector of selectors) {
+        selector.classList.add("hidden")
+    }
+} 
+
 // -------- SECCIÓN REPORTES -------------
 const updateReports = () => {
     const data = getData("operation");
@@ -431,19 +374,7 @@ const updateReports = () => {
 
 }
 
-// const updateBalance = () => {
-//     const data = getData("operation");
-//     const addEarnings = data.filter(operation => operation.type === "earnings").reduce ((add, operation) => add + Number(operation.amount), 0);
-    
-//     const addExpenses = data.filter(operation => operation.type === "expenses").reduce ((add, operation) => add + Number(operation.amount), 0);
 
-//     const addTotal = addEarnings - addExpenses 
-
-//     $("#numb-earnings").innerHTML = `+${addEarnings}`;
-//     $("#numb-expenses").innerHTML = `-${addExpenses}`;
-//     $("#numb-total").innerHTML = `-${addTotal}`;
-
-// }
 
 window.onload = () => {
     const data = getData("category");
