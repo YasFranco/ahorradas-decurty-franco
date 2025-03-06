@@ -132,6 +132,25 @@ const showOperations = (arrayOperations) => {
     }
 
     eventDeleteEditOperation();
+    updateBalance();
+}
+
+
+// ------ BALANCE --------
+
+//$("#numb-earnings")
+const updateBalance = () => {
+    const data = getData("operation");
+    const addEarnings = data.filter(operation => operation.type === "earnings").reduce ((add, operation) => add + Number(operation.amount), 0);
+    
+    const addExpenses = data.filter(operation => operation.type === "expenses").reduce ((add, operation) => add + Number(operation.amount), 0);
+
+    const addTotal = addEarnings - addExpenses 
+
+    $("#numb-earnings").innerHTML = `+${addEarnings}`;
+    $("#numb-expenses").innerHTML = `-${addExpenses}`;
+    $("#numb-total").innerHTML = `-${addTotal}`;
+
 }
 
 
