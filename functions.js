@@ -37,6 +37,15 @@ const deleteData = (idData) => {
     return newArray
 }
 
+const deleteDataOp = (idData) => {
+    const data = getData("operation");
+    const newArrayOp = data.filter(operation => operation.id !== idData)
+
+    saveData("operation", newArrayOp);
+
+    return newArrayOp
+}
+
 const editData = (idCategory, newData) => {
     const data = getData("category");
     const findId = data.findIndex((category) => category.id == idCategory)
