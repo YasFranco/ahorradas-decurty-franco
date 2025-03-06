@@ -191,22 +191,27 @@ const eventDeleteEditOperation = () => {
 
     for (const button of $$arrayButtonsDelete) {
         button.addEventListener("click", (e) => {
-            const newArray = deleteData(e.target.id)
+            const newArray = deleteDataOp(e.target.id)
             showOperations(newArray)
         })
     }
 
     for (const button of $$arrayButtonsEdit) {
         button.addEventListener("click", (e) => {
-            $sectBalance.classList.add("hidden");
-            $sectReports.classList.add("hidden")
+            // $sectBalance.classList.add("hidden");
+            // $sectReports.classList.add("hidden")
+            // $sectNewOp.classList.remove("hidden")
+            // $divFormNewOp.classList.add("hidden")
+            // $formNewOp.classList.add("hidden")
+            // $editFormNewOp.classList.remove("hidden")
+            // $formNewCategory.classList.add("hidden")
+            // $sectCategories.classList.add("hidden");
+            // $formCategoryEdit.classList.add("hidden")
             $sectNewOp.classList.remove("hidden")
-            $divFormNewOp.classList.add("hidden")
-            $formNewOp.classList.add("hidden")
-            $formEditOp.classList.remove("hidden")
-            $formNewCategory.classList.add("hidden")
-            $sectCategories.classList.add("hidden");
-            $formCategoryEdit.classList.add("hidden")
+            $sectCategories.classList.add("hidden")
+            $sectReports.classList.add("hidden")
+            $sectBalance.classList.remove("hidden")
+            $editFormNewOp.classList.remove("hidden")
 
             const data = getData("operation")
             const findOperation = data.find(elem => elem.id === e.target.id);
