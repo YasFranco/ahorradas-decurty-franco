@@ -71,4 +71,13 @@ const editDataOp = (idOp, newData) => {
 
 
 
+const filterCategory = (category) => {
+    const data = getData("operation");
+    return data.filter(operation => operation.category === category)
+}
+
+
+
+
+
 

@@ -341,6 +341,7 @@ $("#order-filter").addEventListener("input", (e) => {
     }
 })
 
+
 // ------------------ FUNCIONES AUXILIARES -----------------------
 const showElement = (selectors) => {
     for (const selector of selectors) {
@@ -353,6 +354,27 @@ const hideElement = (selectors) => {
         selector.classList.add("hidden")
     }
 } 
+
+// -------- SECCIÓN REPORTES -------------
+const updateReports = () => {
+    const data = getData("operation");
+
+    const $divReportsContainer = $('#div-reports-none');
+    $divReportsContainer.classList.add("hidden");
+
+    $divReportsContainer.innerHTML = "";
+
+    if (arrayOperations.length === 0) {
+        $divCategoriesContainer.classList.remove("hidden");
+    }
+
+    //  
+
+
+
+}
+
+
 
 window.onload = () => {
     const data = getData("category");
