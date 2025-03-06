@@ -186,6 +186,47 @@
                         class="p-2 px-4 bg-green-400 text-white rounded">Agregar</button>
                 </div>
             </form>
+            <form id="edit-op-form-container" class="hidden flex flex-col">
+                <div class="flex flex-col pt-4">
+                    <label for="decription" class="font-semibold text-black pb-2.5">Descripción</label>
+                    <input id="input-new-op-description"
+                        class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                        type="text">
+                </div>
+                <div class="flex flex-col pt-4">
+                    <label for="amount" class="font-semibold text-black pb-2.5">Monto</label>
+                    <input id="input-new-op-amount"
+                        class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                        type="number">
+                </div>
+                <div class="flex flex-col pt-4">
+                    <label for="type" class="font-semibold text-black pb-2.5">Tipo</label>
+                    <select id="select-new-op-type"
+                        class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                        <option value="expenses">Gastos</option>
+                        <option value="earnings">Ganancias</option>
+                    </select>
+                </div>
+                <div class="flex flex-col pt-4">
+                    <label for="category" class="font-semibold text-black pb-2.5">Categoría</label>
+                    <select id="select-new-op-category"
+                        class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5">
+
+                    </select>
+                </div>
+                <div class="flex flex-col pt-4">
+                    <label for="date" class="font-semibold text-black pb-2.5">Fecha</label>
+                    <input id="input-new-op-date"
+                        class="cursor-pointer border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                        type="date">
+                </div>
+
+                <div id="div-btn-new-op" class="self-end pt-8">
+                    <button id="btn-new-op-cancel" class="p-2 px-4 bg-stone-100 rounded">Cancelar</button>
+                    <button id="btn-new-op-add" type="submit"
+                        class="p-2 px-4 bg-green-400 text-white rounded">Agregar</button>
+                </div>
+            </form>
         </div>
     </section>
 

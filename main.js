@@ -36,6 +36,8 @@ const $selectCategoryFilter = $("#category-filter")
 // ----- OPERACIONES
 const $formNewOp = $('#new-op-form-container');
 const $sectOperations = $('#div-show-operations');
+const $editFormNewOp = $("#edit-op-form-container");
+const $divFormNewOp = $('#div-new-operation');
 // ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
     $btnMenu.classList.add("hidden");
@@ -89,18 +91,19 @@ $formNewOp.addEventListener('submit', () => {
 // ---- MOSTRAR OPERACIONES ----
 
 
-const showOperations = () => {
+const showOperations = (arrayOperations) => {
     const $sectOpNone = $('#div-show-operations-none');
     $sectOpNone.classList.add("hidden");
     
-    const dataNewOperations = getData("operation")
+    // const dataNewOperations = getData("operation")
     $sectOperations.innerHTML = "";
 
-    if (dataNewOperations.length === 0) {
+    if (arrayOperations.length === 0) {
         $sectOpNone.classList.remove("hidden");
     }
 
-    for (const {id, description, amount, category, date} of dataNewOperations) {
+    // {id, description, amount, category, date}
+    for (const operation of arrayOperations) {
         $sectOperations.innerHTML += ` 
             <div class="flex flex-col mt-8">
                 <div class="hidden flex lg:block lg:flex">
@@ -111,18 +114,19 @@ const showOperations = () => {
                     <p class="w-2/5">Acciones</p>
                 </div>
                 <div class="flex">
-                <p class="w-2/5">${description}</p>
-                <p class="w-2/5">${category}</p>
-                <p class="w-2/5">${date}</p>
-                <p class="w-2/5">${amount}</p>
+                <p class="w-2/5">${operation.description}</p>
+                <p class="w-2/5">${operation.category}</p>
+                <p class="w-2/5">${operation.date}</p>
+                <p class="w-2/5">${operation.amount}</p>
                 <div class="w-2/5">
-                    <button id="${id}" >Editar</button>
-                    <button id="${id}" >Eliminar</button>
+                    <button id="${operation.id}" class="button-edit-op px-2 text-sky-700" >Editar</button>
+                    <button id="${operation.id}" class="button-delete-op px-2 text-sky-700">Eliminar</button>
                 </div>
             </div>
              </div>`
     }
 
+    eventDeleteEditOperation();
 }
 
 
@@ -140,7 +144,7 @@ const showCategories = (arrayCategories) => {
     for (const { id, nameCategory } of arrayCategories) {
         $divCategoriesContainer.innerHTML += `<div class="flex justify-between p-4">
     <ul><li class="border px-2 rounded-lg bg-emerald-100 text-emerald-600">${nameCategory}</li></ul> 
-    <div>
+    <div class="w-2/5">
        <button id="${id}" class="button-edit px-2 text-sky-700">Editar</button>
        <button id="${id}" class="button-delete px-2 text-sky-700" >Eliminar</button>
     </div>
@@ -148,11 +152,11 @@ const showCategories = (arrayCategories) => {
     `
     }
 
-    eventDeleteEdit()
+    eventDeleteEditCategory()
     reloadCategories()
 }
 
-const eventDeleteEdit = () => {
+const eventDeleteEditCategory = () => {
     const $$arrayButtonsDelete = $$(".button-delete");
     const $$arrayButtonsEdit = $$(".button-edit")
 
@@ -177,6 +181,42 @@ const eventDeleteEdit = () => {
 
             $inputEditCategory.value = findCategory.nameCategory
             $formCategoryEdit.id = findCategory.id
+        })
+    }
+}
+
+const eventDeleteEditOperation = () => {
+    const $$arrayButtonsDelete = $$(".button-delete-op");
+    const $$arrayButtonsEdit = $$(".button-edit-op")
+
+    for (const button of $$arrayButtonsDelete) {
+        button.addEventListener("click", (e) => {
+            const newArray = deleteData(e.target.id)
+            showOperations(newArray)
+        })
+    }
+
+    for (const button of $$arrayButtonsEdit) {
+        button.addEventListener("click", (e) => {
+            $sectBalance.classList.add("hidden");
+            $sectReports.classList.add("hidden")
+            $sectNewOp.classList.remove("hidden")
+            $divFormNewOp.classList.add("hidden")
+            $formNewOp.classList.add("hidden")
+            $formEditOp.classList.remove("hidden")
+            $formNewCategory.classList.add("hidden")
+            $sectCategories.classList.add("hidden");
+            $formCategoryEdit.classList.add("hidden")
+
+            const data = getData("operation")
+            const findOperation = data.find(elem => elem.id === e.target.id);
+
+            $editFormNewOp.value = findOperation.description
+            $editFormNewOp.value = findOperation.type
+            $editFormNewOp.value = findOperation.category
+            $editFormNewOp.value = findOperation.date
+            $editFormNewOp.value = findOperation.amount
+            
         })
     }
 }
@@ -234,11 +274,12 @@ $formNewOp.addEventListener('submit', (event) => {
         amount: Number(event.target[1].value),
         type: event.target[2].value,
         category: event.target[3].value,
-        date: dayjs(event.target[2].value).format("YYYY-MM-DD"),
+        date: event.target[4].value,
     }
 
     addOperation(newOp)
-    showOperations(getData)
+    const data = getData("operation");
+    showOperations(data)
     event.target.reset()
 })
 
@@ -264,13 +305,13 @@ $("#type-filter").addEventListener("input", (e) => {
     const data = getData("operation");
     if(e.target.value !== "all"){
         const filterType = data.filter( operation => operation.type === e.target.value);
-        // console.log("aca muestra la data filtrada", filterType) esto funciona pero no lo muestra en pantalla 
+        console.log("aca muestra la data filtrada", filterType)
         showOperations(filterType)
     } else {
         showOperations(data)
     }
     // console.log(e.target.value)
-    console.log(data)
+    // console.log(data)
 })
 
 // filtrar por categoria 
@@ -302,10 +343,10 @@ $("#order-filter").addEventListener("input", (e) => {
 
     // console.log(e.target.value)    
     if(e.target.value === "more-recent"){
-        const filterMoreRecent = dataDup.sort((a,b) => dayjs(b.date) - dayjs(a.date))
+        const filterMoreRecent = dataDup.sort((a,b) => b.date - a.date)
         return showOperations(filterMoreRecent);
     } else if(e.target.value === "less-recent"){
-        const filterLessRecent = dataDup.sort((a,b) => dayjs(a.date) - dayjs(b.date));
+        const filterLessRecent = dataDup.sort((a,b) => a.date - b.date);
         return showOperations(filterLessRecent)
     } else if(e.target.value === "bigger-amount"){
         const filterBiggerAmount = dataDup.sort((a,b) => b.amount - a.amount) ;
