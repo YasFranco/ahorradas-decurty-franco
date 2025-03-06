@@ -57,6 +57,17 @@ const editData = (idCategory, newData) => {
     return data
 }
 
+const editDataOp = (idOp, newData) => {
+    const data = getData("operation");
+    const findId = data.findIndex((operation) => operation.id == idOp)
+
+    data.splice(findId, 1, {...newData, id: idOp})
+
+    saveData("operation", data)
+
+    return data
+}
+
 // export default {
 //     getData,
 //     saveData,
