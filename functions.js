@@ -39,11 +39,11 @@ const deleteData = (idData) => {
 
 const deleteDataOp = (idData) => {
     const data = getData("operation");
-    const newArray = data.filter(operation => operation.id !== idData)
+    const newArrayOp = data.filter(operation => operation.id !== idData)
 
-    saveData("operation", newArray);
+    saveData("operation", newArrayOp);
 
-    return newArray
+    return newArrayOp
 }
 
 const editData = (idCategory, newData) => {

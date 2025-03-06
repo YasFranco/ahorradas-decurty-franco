@@ -186,17 +186,17 @@ const eventDeleteEditCategory = () => {
 }
 
 const eventDeleteEditOperation = () => {
-    const $$arrayButtonsDelete = $$(".button-delete-op");
-    const $$arrayButtonsEdit = $$(".button-edit-op")
+    const $$arrayButtonsDeleteOp = $$(".button-delete-op");
+    const $$arrayButtonsEditOp = $$(".button-edit-op")
 
-    for (const button of $$arrayButtonsDelete) {
+    for (const button of $$arrayButtonsDeleteOp) {
         button.addEventListener("click", (e) => {
             const newArray = deleteDataOp(e.target.id)
             showOperations(newArray)
         })
     }
 
-    for (const button of $$arrayButtonsEdit) {
+    for (const button of $$arrayButtonsEditOp) {
         button.addEventListener("click", (e) => {
             // $sectBalance.classList.add("hidden");
             // $sectReports.classList.add("hidden")
@@ -212,6 +212,7 @@ const eventDeleteEditOperation = () => {
             $sectReports.classList.add("hidden")
             $sectBalance.classList.remove("hidden")
             $editFormNewOp.classList.remove("hidden")
+            $formNewOp.classList.add("hidden")
 
             const data = getData("operation")
             const findOperation = data.find(elem => elem.id === e.target.id);
@@ -350,10 +351,10 @@ $("#order-filter").addEventListener("input", (e) => {
 
     // console.log(e.target.value)    
     if(e.target.value === "more-recent"){
-        const filterMoreRecent = dataDup.sort((a,b) => b.date - a.date)
+        const filterMoreRecent = dataDup.sort((a,b) => new Date(b.date) - new Date(a.date))
         return showOperations(filterMoreRecent);
     } else if(e.target.value === "less-recent"){
-        const filterLessRecent = dataDup.sort((a,b) => a.date - b.date);
+        const filterLessRecent = dataDup.sort((a,b) => new Date(a.date) - new Date(b.date));
         return showOperations(filterLessRecent)
     } else if(e.target.value === "bigger-amount"){
         const filterBiggerAmount = dataDup.sort((a,b) => b.amount - a.amount) ;
