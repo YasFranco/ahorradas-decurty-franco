@@ -288,7 +288,7 @@ $formNewOp.addEventListener('submit', (event) => {
 // ReloadCategories reduce a una función la actualización de categorias de agregar, editar y eliminar en los selects de balance, se solucionan errores y se agrega la función reloadCategories a la línea 162 y 101 para que funcione correctamente en agregar,editar y eliminar.
 const reloadCategories = () => {
     const dataCategoryFilter = getData("category");
-    $selectCategoryFilter.innerHTML = ""
+    $selectCategoryFilter.innerHTML = `<option value="all">Todos</option>`
     for (const { nameCategory } of dataCategoryFilter) {
         $selectCategoryFilter.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
     }
@@ -303,9 +303,10 @@ const reloadCategories = () => {
 // filtrar por tipo: ganancia o gastos
 $("#type-filter").addEventListener("input", (e) => {
     const data = getData("operation");
+    
     if(e.target.value !== "all"){
         const filterType = data.filter( operation => operation.type === e.target.value);
-        console.log("aca muestra la data filtrada", filterType)
+        // console.log("aca muestra la data filtrada", filterType)
         showOperations(filterType)
     } else {
         showOperations(data)
@@ -317,15 +318,16 @@ $("#type-filter").addEventListener("input", (e) => {
 // filtrar por categoria 
 $("#category-filter").addEventListener("input", (e) => {
     const dataOperation = getData("operation");
-    const dataCategory = getData("category")
 
-    // console.log("estas son las categorias",dataCategory);
-    // console.log("estas son las operaciones", dataOperation);
-
-    const filterCategory = dataOperation.filter(operation => operation.category === e.target.value)
+    if(e.target.value !== "all"){
+        const filterCategory = dataOperation.filter(operation => operation.category === e.target.value)
+        showOperations(filterCategory)
+    } else {
+        showOperations(dataOperation)
+    }
 
     // console.log('categoria filtrada', filterCategory)
-    showOperations(filterCategory)
+    
 })
 
 // filtrar desde x fecha 
