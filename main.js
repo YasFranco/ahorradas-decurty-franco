@@ -138,7 +138,7 @@ const showOperations = (arrayOperations) => {
 
 // ------ BALANCE --------
 
-//$("#numb-earnings")
+
 const updateBalance = () => {
     const data = getData("operation");
     const addEarnings = data.filter(operation => operation.type === "earnings").reduce ((add, operation) => add + Number(operation.amount), 0);
@@ -411,6 +411,39 @@ $("#order-filter").addEventListener("input", (e) => {
         return showOperations(filterZA)
     }
 })
+
+// -------- SECCIÓN REPORTES -------------
+const updateReports = () => {
+    const data = getData("operation");
+
+    const $divReportsContainer = $('#div-reports-none');
+    $divReportsContainer.classList.add("hidden");
+
+    $divReportsContainer.innerHTML = "";
+
+    if (arrayOperations.length === 0) {
+        $divCategoriesContainer.classList.remove("hidden");
+    }
+
+    //  
+
+
+
+}
+
+// const updateBalance = () => {
+//     const data = getData("operation");
+//     const addEarnings = data.filter(operation => operation.type === "earnings").reduce ((add, operation) => add + Number(operation.amount), 0);
+    
+//     const addExpenses = data.filter(operation => operation.type === "expenses").reduce ((add, operation) => add + Number(operation.amount), 0);
+
+//     const addTotal = addEarnings - addExpenses 
+
+//     $("#numb-earnings").innerHTML = `+${addEarnings}`;
+//     $("#numb-expenses").innerHTML = `-${addExpenses}`;
+//     $("#numb-total").innerHTML = `-${addTotal}`;
+
+// }
 
 window.onload = () => {
     const data = getData("category");
