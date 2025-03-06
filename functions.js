@@ -68,12 +68,7 @@ const editDataOp = (idOp, newData) => {
     return data
 }
 
-// export default {
-//     getData,
-//     saveData,
-//     addOperation, 
-//     addCategory
-// }
+
 
 
 
