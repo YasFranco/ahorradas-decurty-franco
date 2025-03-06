@@ -38,6 +38,8 @@ const $formNewOp = $('#new-op-form-container');
 const $sectOperations = $('#div-show-operations');
 const $editFormNewOp = $("#edit-op-form-container");
 const $divFormNewOp = $('#div-new-operation');
+const $titleFormEdit = $('#title-edit-operation')
+const $titleFormNew = $('#title-new-operation')
 // ICONO Y VISTA MOBILE MENU
 $btnMenu.addEventListener('click', () => {
     $btnMenu.classList.add("hidden");
@@ -198,34 +200,47 @@ const eventDeleteEditOperation = () => {
 
     for (const button of $$arrayButtonsEditOp) {
         button.addEventListener("click", (e) => {
-            // $sectBalance.classList.add("hidden");
-            // $sectReports.classList.add("hidden")
-            // $sectNewOp.classList.remove("hidden")
-            // $divFormNewOp.classList.add("hidden")
-            // $formNewOp.classList.add("hidden")
-            // $editFormNewOp.classList.remove("hidden")
-            // $formNewCategory.classList.add("hidden")
-            // $sectCategories.classList.add("hidden");
-            // $formCategoryEdit.classList.add("hidden")
+
             $sectNewOp.classList.remove("hidden")
             $sectCategories.classList.add("hidden")
             $sectReports.classList.add("hidden")
-            $sectBalance.classList.remove("hidden")
+            $sectBalance.classList.add("hidden")
             $editFormNewOp.classList.remove("hidden")
             $formNewOp.classList.add("hidden")
+            $titleFormEdit.classList.remove("hidden")
+            $titleFormNew.classList.add("hidden")
 
             const data = getData("operation")
             const findOperation = data.find(elem => elem.id === e.target.id);
+            console.log(findOperation)
 
-            $editFormNewOp.value = findOperation.description
-            $editFormNewOp.value = findOperation.type
-            $editFormNewOp.value = findOperation.category
-            $editFormNewOp.value = findOperation.date
-            $editFormNewOp.value = findOperation.amount
+            $("#input-edit-op-description").value = findOperation.description
+            $("#select-edit-op-type").value = findOperation.type
+            $("#select-edit-op-category").value = findOperation.category
+            $("#input-edit-op-date").value = findOperation.date
+            $("#input-edit-op-amount").value = findOperation.amount
             
         })
     }
 }
+
+$editFormNewOp.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const data = getData("operation");
+    const findOperation = data.find(elem => elem.id === event.target.id);
+
+    const newData = {
+        description: event.target[0].value,
+        amount: Number(event.target[1].value),
+        type: event.target[2].value,
+        category: event.target[3].value,
+        date: event.target[4].value
+    }
+
+    const modifiedData = editDataOp(findOperation.id, newData);
+    showOperations(modifiedData);
+})
 
 $formCategoryEdit.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -303,7 +318,11 @@ const reloadCategories = () => {
     for (const { nameCategory } of dataCategory) {
         $selectCategory.innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
     }
-}
+    const dataCategoryEdit = getData("category");
+    $("#select-edit-op-category").innerHTML = ""
+    for (const { nameCategory } of dataCategoryEdit) {
+        $("#select-edit-op-category").innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
+} }
 
 // --------- SECCIÓN FILTROS --------------
 // filtrar por tipo: ganancia o gastos
