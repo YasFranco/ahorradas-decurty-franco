@@ -106,6 +106,9 @@ const showOperations = (arrayOperations) => {
 
     // {id, description, amount, category, date}
     for (const operation of arrayOperations) {
+        const sign = operation.type === "expenses" ? "-" : "+";
+        const colorClass = operation.type === "expenses" ? "text-red-500" : "text-green-500";
+
         $sectOperations.innerHTML += ` 
             <div class="flex flex-col mt-8">
                 <div class="hidden flex lg:block lg:flex">
@@ -119,7 +122,7 @@ const showOperations = (arrayOperations) => {
                 <p class="w-2/5">${operation.description}</p>
                 <p class="w-2/5">${operation.category}</p>
                 <p class="w-2/5">${operation.date}</p>
-                <p class="w-2/5">${operation.amount}</p>
+                <p class="w-2/5 font-bold ${colorClass}">${sign} $${operation.amount}</p>
                 <div class="w-2/5">
                     <button id="${operation.id}" class="button-edit-op px-2 text-sky-700" >Editar</button>
                     <button id="${operation.id}" class="button-delete-op px-2 text-sky-700">Eliminar</button>
