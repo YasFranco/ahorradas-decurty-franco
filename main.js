@@ -293,6 +293,33 @@ $("#date-filter").addEventListener("input", (e) => {
 
     const filterDate = data.filter(operation => operation.date >= e.target.value);
     showOperations(filterDate)
+});
+
+// ordenar por 
+$("#order-filter").addEventListener("input", (e) => {
+    const data = getData("operation");
+    let dataDup = [...data]
+
+    // console.log(e.target.value)    
+    if(e.target.value === "more-recent"){
+        const filterMoreRecent = dataDup.sort((a,b) => dayjs(b.date) - dayjs(a.date))
+        return showOperations(filterMoreRecent);
+    } else if(e.target.value === "less-recent"){
+        const filterLessRecent = dataDup.sort((a,b) => dayjs(a.date) - dayjs(b.date));
+        return showOperations(filterLessRecent)
+    } else if(e.target.value === "bigger-amount"){
+        const filterBiggerAmount = dataDup.sort((a,b) => b.amount - a.amount) ;
+        return showOperations(filterBiggerAmount)
+    } else if(e.target.value === "smaller-amount"){
+        const filterSmallerAmount = dataDup.sort((a,b) => a.amount - b.amount) ;
+        return showOperations(filterSmallerAmount)
+    } else if(e.target.value === "a-z"){
+        const filterAZ = dataDup.sort((a,b) => a.description.localeCompare(b.description));
+        return showOperations(filterAZ)
+    } else if(e.target.value === "z-a"){
+        const filterZA = dataDup.sort((a,b) => b.description.localeCompare(a.description));
+        return showOperations(filterZA)
+    }
 })
 
 window.onload = () => {
