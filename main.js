@@ -30,7 +30,7 @@ const $editFormNewOp = $("#edit-op-form-container");
 
 // --------------BOTONES VISTAS -----------------------
 $btnMenu.addEventListener('click', () => {
-    showElement([$btnMenuClose,$navMenuMobile])
+    showElement([$btnMenuClose, $navMenuMobile])
     hideElement([$btnMenu])
 })
 
@@ -70,14 +70,16 @@ $formNewOp.addEventListener('submit', () => {
 const showOperations = (arrayOperations) => {
     const $sectOpNone = $('#div-show-operations-none');
     $sectOpNone.classList.add("hidden");
-    
+
     $sectOperations.innerHTML = "";
 
     if (arrayOperations.length === 0) {
         $sectOpNone.classList.remove("hidden");
     }
 
+
     for (const operation of arrayOperations) {
+
         const sign = operation.type === "expenses" ? "-" : "+";
         const colorClass = operation.type === "expenses" ? "text-red-500" : "text-green-500";
 
@@ -101,6 +103,7 @@ const showOperations = (arrayOperations) => {
                 </div>
             </div>
              </div>`
+  
     }
 
     eventDeleteEditOperation();
@@ -114,6 +117,7 @@ const eventDeleteEditOperation = () => {
     for (const button of $$arrayButtonsDeleteOp) {
         button.addEventListener("click", (e) => {
             const newArray = deleteDataOp(e.target.id)
+
             showOperations(newArray)
         })
     }
@@ -132,7 +136,7 @@ const eventDeleteEditOperation = () => {
             $("#select-edit-op-category").value = findOperation.category
             $("#input-edit-op-date").value = findOperation.date
             $("#input-edit-op-amount").value = findOperation.amount
-            
+
         })
     }
 }
@@ -178,10 +182,10 @@ $editFormNewOp.addEventListener("submit", (event) => {
 
 const updateBalance = () => {
     const data = getData("operation");
-    const addEarnings = data.filter(operation => operation.type === "earnings").reduce ((add, operation) => add + Number(operation.amount), 0);
-    const addExpenses = data.filter(operation => operation.type === "expenses").reduce ((add, operation) => add + Number(operation.amount), 0);
+    const addEarnings = data.filter(operation => operation.type === "earnings").reduce((add, operation) => add + Number(operation.amount), 0);
+    const addExpenses = data.filter(operation => operation.type === "expenses").reduce((add, operation) => add + Number(operation.amount), 0);
 
-    const addTotal = addEarnings - addExpenses 
+    const addTotal = addEarnings - addExpenses
 
     $("#numb-earnings").innerHTML = `+${addEarnings}`;
     $("#numb-expenses").innerHTML = `-${addExpenses}`;
@@ -215,8 +219,23 @@ const eventDeleteEditCategory = () => {
 
     for (const button of $$arrayButtonsDelete) {
         button.addEventListener("click", (e) => {
+            
+            const dataCat = getData("category");
+            const findCategory = dataCat.find(category => category.id === e.target.id)
+
+            if(!findCategory) return;
+
             const newArray = deleteData(e.target.id)
+
+            if (!newArray) return;
+
+            const dataOp = getData("operation");
+            const deleteOp = dataOp.filter(operation => operation.category !== findCategory.nameCategory);
+            saveData("operation", deleteOp);
+
+            updateBalance();
             showCategories(newArray)
+            showOperations(deleteOp)
         })
     }
 
@@ -249,7 +268,8 @@ const reloadCategories = () => {
     $("#select-edit-op-category").innerHTML = ""
     for (const { nameCategory } of dataCategoryEdit) {
         $("#select-edit-op-category").innerHTML += `<option value=${nameCategory} >${nameCategory}</option>`
-} }
+    }
+}
 
 $formNewCategory.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -289,9 +309,9 @@ $formCategoryEdit.addEventListener("submit", (event) => {
 
 $("#type-filter").addEventListener("input", (e) => {
     const data = getData("operation");
-    
-    if(e.target.value !== "all"){
-        const filterType = data.filter( operation => operation.type === e.target.value);
+
+    if (e.target.value !== "all") {
+        const filterType = data.filter(operation => operation.type === e.target.value);
         showOperations(filterType)
     } else {
         showOperations(data)
@@ -301,7 +321,7 @@ $("#type-filter").addEventListener("input", (e) => {
 $("#category-filter").addEventListener("input", (e) => {
     const dataOperation = getData("operation");
 
-    if(e.target.value !== "all"){
+    if (e.target.value !== "all") {
         const filterCategory = dataOperation.filter(operation => operation.category === e.target.value)
         showOperations(filterCategory)
     } else {
@@ -319,24 +339,24 @@ $("#date-filter").addEventListener("input", (e) => {
 $("#order-filter").addEventListener("input", (e) => {
     const data = getData("operation");
     let dataDup = [...data]
-  
-    if(e.target.value === "more-recent"){
-        const filterMoreRecent = dataDup.sort((a,b) => new Date(b.date) - new Date(a.date))
+
+    if (e.target.value === "more-recent") {
+        const filterMoreRecent = dataDup.sort((a, b) => new Date(b.date) - new Date(a.date))
         return showOperations(filterMoreRecent);
-    } else if(e.target.value === "less-recent"){
-        const filterLessRecent = dataDup.sort((a,b) => new Date(a.date) - new Date(b.date));
+    } else if (e.target.value === "less-recent") {
+        const filterLessRecent = dataDup.sort((a, b) => new Date(a.date) - new Date(b.date));
         return showOperations(filterLessRecent)
-    } else if(e.target.value === "bigger-amount"){
-        const filterBiggerAmount = dataDup.sort((a,b) => b.amount - a.amount) ;
+    } else if (e.target.value === "bigger-amount") {
+        const filterBiggerAmount = dataDup.sort((a, b) => b.amount - a.amount);
         return showOperations(filterBiggerAmount)
-    } else if(e.target.value === "smaller-amount"){
-        const filterSmallerAmount = dataDup.sort((a,b) => a.amount - b.amount) ;
+    } else if (e.target.value === "smaller-amount") {
+        const filterSmallerAmount = dataDup.sort((a, b) => a.amount - b.amount);
         return showOperations(filterSmallerAmount)
-    } else if(e.target.value === "a-z"){
-        const filterAZ = dataDup.sort((a,b) => a.description.localeCompare(b.description));
+    } else if (e.target.value === "a-z") {
+        const filterAZ = dataDup.sort((a, b) => a.description.localeCompare(b.description));
         return showOperations(filterAZ)
-    } else if(e.target.value === "z-a"){
-        const filterZA = dataDup.sort((a,b) => b.description.localeCompare(a.description));
+    } else if (e.target.value === "z-a") {
+        const filterZA = dataDup.sort((a, b) => b.description.localeCompare(a.description));
         return showOperations(filterZA)
     }
 })
@@ -353,7 +373,7 @@ const hideElement = (selectors) => {
     for (const selector of selectors) {
         selector.classList.add("hidden")
     }
-} 
+}
 
 // -------- SECCIÓN REPORTES -------------
 const updateReports = () => {
@@ -378,7 +398,7 @@ const updateReports = () => {
 
 window.onload = () => {
     const data = getData("category");
-    showCategories(data); 
-    const operations = getData("operation"); 
-    showOperations(operations); 
+    showCategories(data);
+    const operations = getData("operation");
+    showOperations(operations);
 }
