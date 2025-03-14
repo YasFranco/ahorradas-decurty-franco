@@ -59,11 +59,6 @@ $('#btn-new-operation').addEventListener('click', () => {
     hideElement([$sectBalance, $sectCategories, $sectReports])
 })
 
-$formNewOp.addEventListener('submit', () => {
-    showElement([$sectBalance]);
-    hideElement([$sectNewOp, $sectCategories, $sectReports])
-})
-
 // -------------- SECCION OPERACIONES ---------------------
 
 
@@ -131,6 +126,8 @@ const eventDeleteEditOperation = () => {
             const data = getData("operation")
             const findOperation = data.find(elem => elem.id === e.target.id);
 
+            $editFormNewOp.id = findOperation.id;
+
             $("#input-edit-op-description").value = findOperation.description
             $("#select-edit-op-type").value = findOperation.type
             $("#select-edit-op-category").value = findOperation.category
@@ -141,8 +138,12 @@ const eventDeleteEditOperation = () => {
     }
 }
 
+
 $formNewOp.addEventListener('submit', (event) => {
     event.preventDefault();
+
+    showElement([$sectBalance]);
+    hideElement([$sectNewOp, $sectCategories, $sectReports])
 
     const newOp = {
         id: crypto.randomUUID(),
@@ -175,6 +176,9 @@ $editFormNewOp.addEventListener("submit", (event) => {
 
     const modifiedData = editDataOp(findOperation.id, newData);
     showOperations(modifiedData);
+
+    hideElement([$editFormNewOp, $sectNewOp]);
+    showElement([$sectBalance])
 })
 
 
