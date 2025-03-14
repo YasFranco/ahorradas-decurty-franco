@@ -1,10 +1,10 @@
 let dataOperations = []
 let categories = [{
-    id: crypto.randomUUID,
+    id: crypto.randomUUID(),
     nameCategory: "Trabajo",
 },
 {
-    id: crypto.randomUUID,
+    id: crypto.randomUUID(),
     nameCategory: "Servicios"
 }];
 
@@ -19,8 +19,8 @@ const saveData = (key, data) => {
 }
 
 const addOperation = (newOperation) => {
-    dataOperations.push(newOperation)
-    saveData("operation", dataOperations)
+    const data = getData("operation")
+    saveData("operation", [...data, newOperation]);
 }
 
 const addCategory = (objNewCategory) => {
@@ -31,6 +31,8 @@ const addCategory = (objNewCategory) => {
 const deleteData = (idData) => {
     const data = getData("category");
     const newArray = data.filter(category => category.id !== idData)
+
+    if(!newArray) return data
 
     saveData("category", newArray);
 
