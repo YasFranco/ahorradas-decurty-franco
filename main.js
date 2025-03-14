@@ -249,6 +249,7 @@ const eventDeleteEditCategory = () => {
 
             $("#input-edit-category").value = findCategory.nameCategory
             $formCategoryEdit.id = findCategory.id
+            
         })
     }
 }
@@ -302,6 +303,9 @@ $formCategoryEdit.addEventListener("submit", (event) => {
 
     const modifiedData = editData(findCategory.id, newData);
     showCategories(modifiedData)
+
+    hideElement([$formCategoryEdit]);
+    showElement([$formNewCategory])
 })
 
 
