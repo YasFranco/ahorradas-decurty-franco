@@ -87,10 +87,10 @@ const showOperations = (arrayOperations) => {
                     <p class="w-2/5">Monto</p>
                     <p class="w-2/5">Acciones</p>
                 </div>
-                <div class="flex">
-                <p class="w-2/5">${operation.description}</p>
-                <p class="w-2/5">${operation.category}</p>
-                <p class="w-2/5">${operation.date}</p>
+                <div class="flex flex-wrap md:flex-nowrap">
+                <p class="w-2/5 font-bold">${operation.description}</p>
+                <p class="w-2/5  px-2 rounded-lg text-emerald-500">${operation.category}</p>
+                <p class="w-2/5 hidden md:flex">${operation.date}</p>
                 <p class="w-2/5 font-bold ${colorClass}">${sign} $${operation.amount}</p>
                 <div class="w-2/5">
                     <button id="${operation.id}" class="button-edit-op px-2 text-sky-700" >Editar</button>
