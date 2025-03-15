@@ -55,8 +55,8 @@ $('#nav-balance').addEventListener('click', () => {
 })
 
 $('#btn-new-operation').addEventListener('click', () => {
-    showElement([$sectNewOp]);
-    hideElement([$sectBalance, $sectCategories, $sectReports])
+    showElement([$sectNewOp, $formNewOp, $('#title-new-operation')]);
+    hideElement([$sectBalance, $sectCategories, $sectReports, $editFormNewOp, $('#title-edit-operation')]);
 })
 
 // -------------- SECCION OPERACIONES ---------------------
@@ -124,7 +124,7 @@ const eventDeleteEditOperation = () => {
             hideElement([$sectCategories, $sectReports, $sectBalance, $formNewOp, $('#title-new-operation')])
 
             const data = getData("operation")
-            const findOperation = data.find(elem => elem.id === e.target.id);
+            const findOperation = data.find(elem => elem.id == e.target.id);
 
             $editFormNewOp.id = findOperation.id;
 
@@ -143,7 +143,7 @@ $formNewOp.addEventListener('submit', (event) => {
     event.preventDefault();
 
     showElement([$sectBalance]);
-    hideElement([$sectNewOp, $sectCategories, $sectReports])
+    hideElement([$sectNewOp, $sectCategories, $sectReports, $editFormNewOp, $("#title-edit-operation")])
 
     const newOp = {
         id: crypto.randomUUID(),
@@ -164,7 +164,7 @@ $editFormNewOp.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const data = getData("operation");
-    const findOperation = data.find(elem => elem.id === event.target.id);
+    const findOperation = data.find(elem => elem.id == event.target.id);
 
     const newData = {
         description: event.target[0].value,
