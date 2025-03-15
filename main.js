@@ -55,8 +55,20 @@ $('#nav-balance').addEventListener('click', () => {
 })
 
 $('#btn-new-operation').addEventListener('click', () => {
-    showElement([$sectNewOp]);
-    hideElement([$sectBalance, $sectCategories, $sectReports])
+    showElement([$sectNewOp, $formNewOp, $('#title-new-operation'), $("#div-new-operation")]);
+    hideElement([$sectBalance, $sectCategories, $sectReports, $editFormNewOp, $('#title-edit-operation')]);
+})
+
+$("#btn-cancel-edit-op").addEventListener("click", () =>{
+    showElement([$sectBalance]);
+    hideElement([$editFormNewOp]);
+
+    operations = JSON.parse(localStorage.getItem("operation")) || [];
+})
+
+$("#btn-cancel-new-op").addEventListener("click", () => {
+    showElement([$sectBalance]);
+    hideElement([$formNewOp, $("#title-new-operation"), $("#div-new-operation")])
 })
 
 // -------------- SECCION OPERACIONES ---------------------
@@ -87,10 +99,10 @@ const showOperations = (arrayOperations) => {
                     <p class="w-2/5">Monto</p>
                     <p class="w-2/5">Acciones</p>
                 </div>
-                <div class="flex">
-                <p class="w-2/5">${operation.description}</p>
-                <p class="w-2/5">${operation.category}</p>
-                <p class="w-2/5">${operation.date}</p>
+                <div class="flex flex-wrap md:flex-nowrap">
+                <p class="w-2/5 font-bold">${operation.description}</p>
+                <p class="w-2/5  px-2 rounded-lg text-emerald-500">${operation.category}</p>
+                <p class="w-2/5 hidden md:flex">${operation.date}</p>
                 <p class="w-2/5 font-bold ${colorClass}">${sign} $${operation.amount}</p>
                 <div class="w-2/5">
                     <button id="${operation.id}" class="button-edit-op px-2 text-sky-700" >Editar</button>
@@ -120,11 +132,11 @@ const eventDeleteEditOperation = () => {
     for (const button of $$arrayButtonsEditOp) {
         button.addEventListener("click", (e) => {
 
-            showElement([$sectNewOp, $editFormNewOp, $('#title-edit-operation')]);
+            showElement([$sectNewOp, $editFormNewOp, $('#title-edit-operation'), $("#div-new-operation")]);
             hideElement([$sectCategories, $sectReports, $sectBalance, $formNewOp, $('#title-new-operation')])
 
             const data = getData("operation")
-            const findOperation = data.find(elem => elem.id === e.target.id);
+            const findOperation = data.find(elem => elem.id == e.target.id);
 
             $editFormNewOp.id = findOperation.id;
 
@@ -143,7 +155,7 @@ $formNewOp.addEventListener('submit', (event) => {
     event.preventDefault();
 
     showElement([$sectBalance]);
-    hideElement([$sectNewOp, $sectCategories, $sectReports])
+    hideElement([$sectNewOp, $sectCategories, $sectReports, $editFormNewOp, $("#title-edit-operation")])
 
     const newOp = {
         id: crypto.randomUUID(),
@@ -164,7 +176,7 @@ $editFormNewOp.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const data = getData("operation");
-    const findOperation = data.find(elem => elem.id === event.target.id);
+    const findOperation = data.find(elem => elem.id == event.target.id);
 
     const newData = {
         description: event.target[0].value,
@@ -193,7 +205,7 @@ const updateBalance = () => {
 
     $("#numb-earnings").innerHTML = `+${addEarnings}`;
     $("#numb-expenses").innerHTML = `-${addExpenses}`;
-    $("#numb-total").innerHTML = `-${addTotal}`;
+    $("#numb-total").innerHTML = `${addTotal}`;
 
 }
 
@@ -392,13 +404,9 @@ const updateReports = () => {
 
     $divReportsContainer.innerHTML = "";
 
-    if (arrayOperations.length === 0) {
+    if (data.length === 0) {
         $divCategoriesContainer.classList.remove("hidden");
     }
-
-    //  
-
-
 
 }
 
