@@ -193,7 +193,7 @@ const updateBalance = () => {
 
     $("#numb-earnings").innerHTML = `+${addEarnings}`;
     $("#numb-expenses").innerHTML = `-${addExpenses}`;
-    $("#numb-total").innerHTML = `${addTotal < 0 ? '-' : '+'}${addTotal}`;
+    $("#numb-total").innerHTML = `${addTotal}`;
 
 }
 
