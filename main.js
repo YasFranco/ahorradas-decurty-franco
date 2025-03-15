@@ -399,15 +399,34 @@ const hideElement = (selectors) => {
 const updateReports = () => {
     const data = getData("operation");
 
-    const $divReportsContainer = $('#div-reports-none');
-    $divReportsContainer.classList.add("hidden");
+    // hideElement([$('#div-reports-none')]);
 
-    $divReportsContainer.innerHTML = "";
-
-    if (data.length === 0) {
-        $divCategoriesContainer.classList.remove("hidden");
+    if(data.length === 0){
+       showElement([$('#div-reports-none')]);
     }
 
+    let categoryTotals = {};
+
+    data.forEach(operation => {
+        if(!categoryTotals[operation.category]){
+            categoryTotals[operation.category] = 0;
+        }
+        categoryTotals[operation.category] += Number(operation.amount);
+
+    });
+
+    const $divReports = $("#div-reports");
+
+    $divReports.innerHTML = "";
+
+
+    for (const category of categoryTotals) {
+        $divReports.innerHTML += `
+        <div class="flex justify-between p-2 border-b">
+            <p>${category}</p>
+            <p class="font-bold">$${categoryTotals[category].toFixed(2)}</p>
+        </div>`;
+    }
 }
 
 
@@ -417,4 +436,5 @@ window.onload = () => {
     showCategories(data);
     const operations = getData("operation");
     showOperations(operations);
+    updateReports();
 }
