@@ -193,7 +193,7 @@ const updateBalance = () => {
 
     $("#numb-earnings").innerHTML = `+${addEarnings}`;
     $("#numb-expenses").innerHTML = `-${addExpenses}`;
-    $("#numb-total").innerHTML = `-${addTotal}`;
+    $("#numb-total").innerHTML = `${addTotal < 0 ? '-' : '+'}${addTotal}`;
 
 }
 
@@ -392,13 +392,9 @@ const updateReports = () => {
 
     $divReportsContainer.innerHTML = "";
 
-    if (arrayOperations.length === 0) {
+    if (data.length === 0) {
         $divCategoriesContainer.classList.remove("hidden");
     }
-
-    //  
-
-
 
 }
 
