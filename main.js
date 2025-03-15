@@ -55,8 +55,20 @@ $('#nav-balance').addEventListener('click', () => {
 })
 
 $('#btn-new-operation').addEventListener('click', () => {
-    showElement([$sectNewOp, $formNewOp, $('#title-new-operation')]);
+    showElement([$sectNewOp, $formNewOp, $('#title-new-operation'), $("#div-new-operation")]);
     hideElement([$sectBalance, $sectCategories, $sectReports, $editFormNewOp, $('#title-edit-operation')]);
+})
+
+$("#btn-cancel-edit-op").addEventListener("click", () =>{
+    showElement([$sectBalance]);
+    hideElement([$editFormNewOp]);
+
+    operations = JSON.parse(localStorage.getItem("operation")) || [];
+})
+
+$("#btn-cancel-new-op").addEventListener("click", () => {
+    showElement([$sectBalance]);
+    hideElement([$formNewOp, $("#title-new-operation"), $("#div-new-operation")])
 })
 
 // -------------- SECCION OPERACIONES ---------------------
@@ -120,7 +132,7 @@ const eventDeleteEditOperation = () => {
     for (const button of $$arrayButtonsEditOp) {
         button.addEventListener("click", (e) => {
 
-            showElement([$sectNewOp, $editFormNewOp, $('#title-edit-operation')]);
+            showElement([$sectNewOp, $editFormNewOp, $('#title-edit-operation'), $("#div-new-operation")]);
             hideElement([$sectCategories, $sectReports, $sectBalance, $formNewOp, $('#title-new-operation')])
 
             const data = getData("operation")
