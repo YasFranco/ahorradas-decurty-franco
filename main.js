@@ -61,7 +61,7 @@ $('#btn-new-operation').addEventListener('click', () => {
 
 $("#btn-cancel-edit-op").addEventListener("click", () =>{
     showElement([$sectBalance]);
-    hideElement([$editFormNewOp]);
+    hideElement([$editFormNewOp, $("#title-edit-operation"), $("#div-new-operation")]);
 
     operations = JSON.parse(localStorage.getItem("operation")) || [];
 })
