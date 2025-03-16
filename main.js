@@ -399,21 +399,9 @@ const hideElement = (selectors) => {
 const updateReports = () => {
     const data = getData("operation");
 
-    // hideElement([$('#div-reports-none')]);
-
-    if(data.length === 0){
-       showElement([$('#div-reports-none')]);
+    if(data.length !== 0){
+       hideElement([$('#div-reports-none')]);
     }
-
-    let categoryTotals = {};
-
-    data.forEach(operation => {
-        if(!categoryTotals[operation.category]){
-            categoryTotals[operation.category] = 0;
-        }
-        categoryTotals[operation.category] += Number(operation.amount);
-
-    });
 
     const $divReports = $("#div-reports");
 
@@ -436,5 +424,4 @@ window.onload = () => {
     showCategories(data);
     const operations = getData("operation");
     showOperations(operations);
-    updateReports();
 }
